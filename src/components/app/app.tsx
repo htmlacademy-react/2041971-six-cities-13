@@ -6,7 +6,7 @@ type AppProps = {
 
 function App({placesCount}: AppProps): JSX.Element {
   return (
-    <WelcomeScreen placesCount ={placesCount} />
+    <WelcomeScreen placesCount={placesCount} />
   );
 }
 
