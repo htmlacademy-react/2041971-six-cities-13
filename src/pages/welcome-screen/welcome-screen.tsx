@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
@@ -10,6 +11,9 @@ type WelcomeScreenProps = {
 function WelcomeScreen({placesCount}: WelcomeScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>Шесть городов. Главная страница</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

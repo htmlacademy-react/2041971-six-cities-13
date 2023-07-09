@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
@@ -6,6 +7,9 @@ import PlaceCard from '../../components/place-card/place-card';
 function OfferScreen():JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>Шесть городов. {/*будет название отеля*/}</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

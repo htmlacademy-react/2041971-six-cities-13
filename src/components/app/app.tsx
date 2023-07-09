@@ -1,4 +1,5 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -13,23 +14,25 @@ type AppProps = {
 
 function App({placesCount}: AppProps): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Main} element={<WelcomeScreen placesCount={placesCount} />} />
-      </Routes>
-      <Routes>
-        <Route path={AppRoute.Login} element={<LoginScreen />} />
-      </Routes>
-      <Routes>
-        <Route path={AppRoute.Favotites} element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><FavoritesScreen /></PrivateRoute>} />
-      </Routes>
-      <Routes>
-        <Route path={AppRoute.Offer} element={<OfferScreen />} />
-      </Routes>
-      <Routes>
-        <Route path="*" element={<NotFoundScreen />} />
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path={AppRoute.Main} element={<WelcomeScreen placesCount={placesCount} />} />
+        </Routes>
+        <Routes>
+          <Route path={AppRoute.Login} element={<LoginScreen />} />
+        </Routes>
+        <Routes>
+          <Route path={AppRoute.Favotites} element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><FavoritesScreen /></PrivateRoute>} />
+        </Routes>
+        <Routes>
+          <Route path={AppRoute.Offer} element={<OfferScreen />} />
+        </Routes>
+        <Routes>
+          <Route path="*" element={<NotFoundScreen />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
