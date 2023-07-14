@@ -14,7 +14,7 @@ type AppProps = {
   offers: Offer[];
 };
 
-function App({ placesCount, offers }: AppProps): JSX.Element {
+function App({placesCount, offers}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -25,11 +25,7 @@ function App({ placesCount, offers }: AppProps): JSX.Element {
               <WelcomeScreen placesCount={placesCount} offers={offers} />
             }
           />
-        </Routes>
-        <Routes>
           <Route path={AppRoute.Login} element={<LoginScreen />} />
-        </Routes>
-        <Routes>
           <Route
             path={AppRoute.Favotites}
             element={
@@ -38,11 +34,7 @@ function App({ placesCount, offers }: AppProps): JSX.Element {
               </PrivateRoute>
             }
           />
-        </Routes>
-        <Routes>
-          <Route path={AppRoute.Offer} element={<OfferScreen />} />
-        </Routes>
-        <Routes>
+          <Route path={AppRoute.Offer} element={<OfferScreen offers={offers} />} />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>
       </BrowserRouter>

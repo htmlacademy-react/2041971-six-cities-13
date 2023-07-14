@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
+import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -8,8 +10,9 @@ type PlaceCardProps = {
 function PlaceCard({offer}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, title, type, id} = offer;
 
-  const [, setActivePlaceCard] = useState('');
-
+  const [/*placeCard*/, setActivePlaceCard] = useState('');
+  /*       ↑       */
+  /*Линтер ругается на неиспользование переменной*/
   return (
     <article className="cities__card place-card"
       id={id}
@@ -48,7 +51,7 @@ function PlaceCard({offer}: PlaceCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={AppRoute.Offer}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

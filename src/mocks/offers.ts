@@ -90,7 +90,7 @@ export const offers: Offer[] = [
       zoom: 16,
     },
     isFavorite: true,
-    isPremium: false,
+    isPremium: true,
     rating: 3.2,
   },
 ];

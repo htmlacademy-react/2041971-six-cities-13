@@ -89,9 +89,6 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
                 </ul>
               </form>
               <PlaceCardList offers={offers}/>
-              {/* <div className="cities__places-list places__list tabs__content">
-                {offers.map((offer) => <PlaceCard key={offer.id} offer={offer}/>)}
-              </div> */}
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
