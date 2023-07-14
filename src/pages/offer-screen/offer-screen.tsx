@@ -58,7 +58,7 @@ function OfferScreen():JSX.Element {
                     Beautiful &amp; luxurious studio at great location
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
+                  <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
                   <span className="visually-hidden">To bookmarks</span>
@@ -129,7 +129,7 @@ function OfferScreen():JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="offer__user-name">
                       Angelina
@@ -153,7 +153,7 @@ function OfferScreen():JSX.Element {
                   <li className="reviews__item">
                     <div className="reviews__user user">
                       <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
+                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width={54} height={54} alt="Reviews avatar" />
                       </div>
                       <span className="reviews__user-name">
                           Max
@@ -203,14 +203,14 @@ function OfferScreen():JSX.Element {
 
                     <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
                     <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
+                      <svg className="form__star-image" width={37} height={33}>
                         <use xlinkHref="#icon-star"></use>
                       </svg>
                     </label>
 
                     <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
                     <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
+                      <svg className="form__star-image" width={37} height={33}>
                         <use xlinkHref="#icon-star"></use>
                       </svg>
                     </label>
