@@ -38,7 +38,7 @@ function Map(props: MapProps): JSX.Element {
   }, [map, points]);
 
   return (
-    <div style={{height: '1000px'}} ref={mapRef}></div>
+    <div style={{height: '100%'}} ref={mapRef}></div>
   );
 }
 
