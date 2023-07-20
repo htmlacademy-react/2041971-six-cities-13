@@ -22,3 +22,8 @@ export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
 
 export const CITIES = ['Paris', 'Colognne', 'Brussels', 'Amsterdam', 'Humburg', 'Dusseldorf'];
+
+export const DateFormat = {
+  DATE_FORMAT: 'YYYY-MM-DD',
+  REVIEW_DATE_FORMAT: 'MMMM YYYY',
+};
