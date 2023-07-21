@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
-import { Link } from 'react-router-dom';
 
 function NotFoundScreen(): JSX.Element {
   return(
@@ -36,7 +36,7 @@ function NotFoundScreen(): JSX.Element {
       </main>
       <footer className="footer">
         <Link className="footer__logo-link" to="/">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width={64} height={33} />
         </Link>
       </footer>
     </div>
