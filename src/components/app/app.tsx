@@ -15,10 +15,11 @@ type AppProps = {
   offers: Offer[];
   offerFullCard: OfferCard;
   reviews: Review[];
+  cities: string[];
 };
 
 function App(props: AppProps): JSX.Element {
-  const {placesCount, offers, offerFullCard, reviews} = props;
+  const {placesCount, offers, offerFullCard, reviews, cities} = props;
 
   return (
     <HelmetProvider>
@@ -27,7 +28,11 @@ function App(props: AppProps): JSX.Element {
           <Route
             path={AppRoute.Main}
             element={
-              <WelcomeScreen placesCount={placesCount} offers={offers} />
+              <WelcomeScreen
+                placesCount={placesCount}
+                offers={offers}
+                cities={cities}
+              />
             }
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />

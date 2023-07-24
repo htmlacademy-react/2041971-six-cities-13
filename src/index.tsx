@@ -6,6 +6,7 @@ import { Setting } from './const';
 import { offers, offerFullCard } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
+import { CITIES } from './const';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,6 +20,7 @@ root.render(
         offers={offers}
         offerFullCard={offerFullCard}
         reviews={reviews}
+        cities={CITIES}
       />
     </Provider>
   </React.StrictMode>
