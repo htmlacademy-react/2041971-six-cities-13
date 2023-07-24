@@ -1,19 +1,23 @@
 import { Helmet } from 'react-helmet-async';
+import { useAppDispatch } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
 import { Offer } from '../../types/offer';
-import { CITIES } from '../../const';
+import { changeCity } from '../../store/action';
 
 type WelcomeScreenProps = {
     placesCount: number;
     offers: Offer[];
+    cities: string[];
 }
 
-function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
+function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.Element {
   const points = offers.map((offer) => offer.location);
+  const dispatch = useAppDispatch();
 
   return (
     <div className="page page--gray page--main">
@@ -38,14 +42,7 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {CITIES && CITIES.map((city) => (
-                <li key={city} className="locations__item" >
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>{city}</span>
-                  </a>
-                </li>))}
-            </ul>
+            <CitiesList cities={cities} />
           </section>
         </div>
         <div className="cities">

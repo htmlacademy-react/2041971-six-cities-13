@@ -5,7 +5,7 @@ const FIRST_CITY = 'Paris';
 
 const initialState = {
   city: FIRST_CITY,
-  offers: []
+  offers: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
