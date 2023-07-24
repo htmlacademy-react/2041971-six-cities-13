@@ -9,11 +9,12 @@ const initialState = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(changeCity, (state) => {
-    state.city;
-  })
-    .addCase(fillOffersList, (state) => {
-      state.offers = offers.find((offer) => offer.city = state.city);
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.playload.city;
+    })
+    .addCase(fillOffersList, (state, action) => {
+      state.offers = action.payload.offers.filter((offer) => offer.city.name === state.city);
     });
 });
 
