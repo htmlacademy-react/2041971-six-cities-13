@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
@@ -7,7 +7,7 @@ import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { Offer } from '../../types/offer';
-import { changeCity } from '../../store/action';
+import { changeCity, fillOffersList } from '../../store/action';
 
 type WelcomeScreenProps = {
     placesCount: number;
@@ -16,8 +16,18 @@ type WelcomeScreenProps = {
 }
 
 function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.Element {
-  const points = offers.map((offer) => offer.location);
   const dispatch = useAppDispatch();
+
+  //dispatch(fillOffersList({offers}));
+
+  const city = useAppSelector((state) => state.city);
+  const currentOffers = useAppSelector((state) => state.offers);
+  console.log(city)
+
+  const handleCityCheck = () => {
+    dispatch(changeCity({city}));
+    dispatch(fillOffersList({offers}));
+  };
 
   return (
     <div className="page page--gray page--main">
@@ -42,7 +52,7 @@ function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.E
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList cities={cities} />
+            <CitiesList cities={cities} onCity={handleCityCheck}/>
           </section>
         </div>
         <div className="cities">
@@ -69,7 +79,7 @@ function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.E
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={offers[0].city} points={points} />
+                <Map offers={currentOffers} />
               </section>
             </div>
           </div>
