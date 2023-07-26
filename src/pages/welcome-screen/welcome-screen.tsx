@@ -3,7 +3,9 @@ import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
+import Map from '../../components/map/map';
 import { Offer } from '../../types/offer';
+import { CITIES } from '../../const';
 
 type WelcomeScreenProps = {
     placesCount: number;
@@ -11,6 +13,8 @@ type WelcomeScreenProps = {
 }
 
 function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
+  const points = offers.map((offer) => offer.location);
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -35,36 +39,12 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
         <div className="tabs">
           <section className="locations container">
             <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
+              {CITIES && CITIES.map((city) => (
+                <li key={city} className="locations__item" >
+                  <a className="locations__item-link tabs__item" href="#">
+                    <span>{city}</span>
+                  </a>
+                </li>))}
             </ul>
           </section>
         </div>
@@ -91,7 +71,9 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
               <PlaceCardList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={offers[0].city} points={points} />
+              </section>
             </div>
           </div>
         </div>
