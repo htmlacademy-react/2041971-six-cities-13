@@ -21,10 +21,11 @@ function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.E
   //dispatch(fillOffersList({offers}));
 
   const city = useAppSelector((state) => state.city);
-  const currentOffers = useAppSelector((state) => state.offers);
-  console.log(city)
+  //const currentOffers = useAppSelector((state) => state.offers);
+  const currentOffers = offers.filter((offer) => offer.city.name === city);
 
   const handleCityCheck = () => {
+    console.log(1)
     dispatch(changeCity({city}));
     dispatch(fillOffersList({offers}));
   };
@@ -75,7 +76,7 @@ function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.E
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers}/>
+              <PlaceCardList offers={currentOffers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

@@ -10,7 +10,7 @@ type MapProps = {
 }
 
 const defaultCustomIcon = leaflet.icon({
-  iconUrl: URL_MARKER_DEFAULT,
+  iconUrl: URL_MARKER_DEFAULT as string,
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
@@ -20,12 +20,12 @@ function Map({offers}: MapProps): JSX.Element {
 
   const mapPoints = {
     city: firstOffer.city,
-    points: offers.map((offer) => offer.city.location),
+    points: offers.map((offer) => offer.location),
   };
 
-  const city = mapPoints.city;
+  const cityLocation = mapPoints.city.location;
   const mapRef = useRef(null);
-  const map = useMap({mapRef, city});
+  const map = useMap({mapRef, cityLocation});
 
   useEffect(() => {
     if (map) {
