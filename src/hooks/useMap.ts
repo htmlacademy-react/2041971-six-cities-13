@@ -8,8 +8,7 @@ type MapProps = {
   city: City;
 }
 
-function useMap(props: MapProps) {
-  const {mapRef, city} = props;
+function useMap({mapRef, city}: MapProps) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 
