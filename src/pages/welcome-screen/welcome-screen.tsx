@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
@@ -7,28 +7,15 @@ import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { Offer } from '../../types/offer';
-import { changeCity, fillOffersList } from '../../store/action';
 
 type WelcomeScreenProps = {
-    placesCount: number;
     offers: Offer[];
     cities: string[];
 }
 
-function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
-  //dispatch(fillOffersList({offers}));
-
+function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
   const city = useAppSelector((state) => state.city);
-  //const currentOffers = useAppSelector((state) => state.offers);
   const currentOffers = offers.filter((offer) => offer.city.name === city);
-
-  const handleCityCheck = () => {
-    console.log(1)
-    dispatch(changeCity({city}));
-    dispatch(fillOffersList({offers}));
-  };
 
   return (
     <div className="page page--gray page--main">
@@ -53,14 +40,14 @@ function WelcomeScreen({placesCount, offers, cities}: WelcomeScreenProps): JSX.E
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitiesList cities={cities} onCity={handleCityCheck}/>
+            <CitiesList cities={cities} offers={offers} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{currentOffers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

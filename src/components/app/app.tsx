@@ -11,7 +11,6 @@ import { Offer, OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
 
 type AppProps = {
-  placesCount: number;
   offers: Offer[];
   offerFullCard: OfferCard;
   reviews: Review[];
@@ -19,7 +18,7 @@ type AppProps = {
 };
 
 function App(props: AppProps): JSX.Element {
-  const {placesCount, offers, offerFullCard, reviews, cities} = props;
+  const {offers, offerFullCard, reviews, cities} = props;
 
   return (
     <HelmetProvider>
@@ -29,7 +28,6 @@ function App(props: AppProps): JSX.Element {
             path={AppRoute.Main}
             element={
               <WelcomeScreen
-                placesCount={placesCount}
                 offers={offers}
                 cities={cities}
               />
