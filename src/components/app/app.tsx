@@ -7,14 +7,19 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { Offer } from '../../types/offer';
+import { Offer, OfferCard } from '../../types/offer';
+import { Review } from '../../types/reviews';
 
 type AppProps = {
   placesCount: number;
   offers: Offer[];
+  offerFullCard: OfferCard;
+  reviews: Review[];
 };
 
-function App({placesCount, offers}: AppProps): JSX.Element {
+function App(props: AppProps): JSX.Element {
+  const {placesCount, offers, offerFullCard, reviews} = props;
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -34,7 +39,10 @@ function App({placesCount, offers}: AppProps): JSX.Element {
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Offer} element={<OfferScreen offers={offers} />} />
+          <Route
+            path={AppRoute.Offer}
+            element={<OfferScreen offers={offers} offerFullCard={offerFullCard} reviews={reviews} />}
+          />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>
       </BrowserRouter>
