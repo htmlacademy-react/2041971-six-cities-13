@@ -1,4 +1,5 @@
 import { Icon, Marker, layerGroup } from 'leaflet';
+import './map.css';
 import 'leaflet/dist/leaflet.css';
 import { useRef, useEffect } from 'react';
 import useMap from '../../hooks/use-map';
