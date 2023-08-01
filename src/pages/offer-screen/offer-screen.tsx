@@ -19,7 +19,6 @@ function OfferScreen(props: OfferScreenProps):JSX.Element {
   const {offers, offerFullCard, reviews} = props;
   const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = offerFullCard;
   const neighbourhoods = offers.slice(0,3);
-  const points = neighbourhoods.map((offer) => offer.location);
 
   return (
     <div className="page">
@@ -110,7 +109,7 @@ function OfferScreen(props: OfferScreenProps):JSX.Element {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={offers[0].city} points={points} />
+            <Map offers={neighbourhoods} />
           </section>
         </section>
         <div className="container">

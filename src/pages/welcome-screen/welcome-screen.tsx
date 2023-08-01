@@ -1,19 +1,21 @@
 import { Helmet } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
+import CitiesList from '../../components/cities-list/cities-list';
 import { Offer } from '../../types/offer';
-import { CITIES } from '../../const';
 
 type WelcomeScreenProps = {
-    placesCount: number;
     offers: Offer[];
+    cities: string[];
 }
 
-function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
-  const points = offers.map((offer) => offer.location);
+function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
+  const city = useAppSelector((state) => state.city);
+  const currentOffers = offers.filter((offer) => offer.city.name === city);
 
   return (
     <div className="page page--gray page--main">
@@ -38,21 +40,14 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {CITIES && CITIES.map((city) => (
-                <li key={city} className="locations__item" >
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>{city}</span>
-                  </a>
-                </li>))}
-            </ul>
+            <CitiesList cities={cities} offers={offers} />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{placesCount} places to stay in Amsterdam</b>
+              <b className="places__found">{currentOffers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -68,11 +63,11 @@ function WelcomeScreen({placesCount, offers}: WelcomeScreenProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCardList offers={offers}/>
+              <PlaceCardList offers={currentOffers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={offers[0].city} points={points} />
+                <Map offers={currentOffers} />
               </section>
             </div>
           </div>
