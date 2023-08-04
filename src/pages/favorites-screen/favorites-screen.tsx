@@ -1,18 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
 import Sign from '../../components/sign/sign';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchFavoritesAction } from '../../store/api-actions';
 
-type FavoritesScreenProps = {
-  offers: Offer[];
-};
-
-function FavoritesScreen({offers}: FavoritesScreenProps): JSX.Element {
-  const favorites = offers.filter((offer) => offer.isFavorite);
+function FavoritesScreen(): JSX.Element {
+  store.dispatch(fetchFavoritesAction());
+  const favorites = useAppSelector((state) => state.favorites);
 
   return (
     <div className="page">
