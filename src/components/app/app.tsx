@@ -7,18 +7,28 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
-import { Offer, OfferCard } from '../../types/offer';
+import { OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 type AppProps = {
-  offers: Offer[];
   offerFullCard: OfferCard;
   reviews: Review[];
   cities: string[];
 };
 
 function App(props: AppProps): JSX.Element {
-  const {offers, offerFullCard, reviews, cities} = props;
+  const {offerFullCard, reviews, cities} = props;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const offers = useAppSelector((state) => state.offers);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <HelmetProvider>
@@ -38,7 +48,7 @@ function App(props: AppProps): JSX.Element {
             path={AppRoute.Favotites}
             element={
               <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <FavoritesScreen offers={offers} />
+                <FavoritesScreen />
               </PrivateRoute>
             }
           />
