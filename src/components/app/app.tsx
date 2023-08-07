@@ -1,4 +1,4 @@
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
@@ -11,6 +11,8 @@ import { OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-rout';
+import browserHistory from '../../browser-history';
 
 type AppProps = {
   offerFullCard: OfferCard;
@@ -32,7 +34,7 @@ function App(props: AppProps): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.Main}
@@ -40,6 +42,7 @@ function App(props: AppProps): JSX.Element {
               <WelcomeScreen
                 offers={offers}
                 cities={cities}
+                authorizationStatus={authorizationStatus}
               />
             }
           />
@@ -47,7 +50,7 @@ function App(props: AppProps): JSX.Element {
           <Route
             path={AppRoute.Favotites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <FavoritesScreen />
               </PrivateRoute>
             }
@@ -58,7 +61,7 @@ function App(props: AppProps): JSX.Element {
           />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
