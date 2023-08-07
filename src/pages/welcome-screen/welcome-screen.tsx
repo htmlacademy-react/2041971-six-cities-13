@@ -8,16 +8,17 @@ import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import Sorting from '../../components/sorting/sorting';
 import { Offer } from '../../types/offer';
-import { CITIES } from '../../const';
+import { CITIES, AuthorizationStatus } from '../../const';
 import { sorting } from '../../utils';
 import { useState } from 'react';
 
 type WelcomeScreenProps = {
     offers: Offer[];
     cities: typeof CITIES;
+    authorizationStatus: AuthorizationStatus;
 }
 
-function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
+function WelcomeScreen({offers, cities, authorizationStatus}: WelcomeScreenProps): JSX.Element {
   const city = useAppSelector((state) => state.city);
   const sortingType = useAppSelector((state) => state.sortingType);
   const currentOffers = sorting[sortingType](offers.filter((offer) => offer.city.name === city));
@@ -39,12 +40,7 @@ function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <User />
-                <Sign />
-              </ul>
-            </nav>
+            {authorizationStatus === AuthorizationStatus.Auth ? <User /> : <Sign />}
           </div>
         </div>
       </header>
