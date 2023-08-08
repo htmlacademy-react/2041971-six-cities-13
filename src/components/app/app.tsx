@@ -13,6 +13,7 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
+import RequireAuth from '../private-route/privete-rout2';
 
 type AppProps = {
   offerFullCard: OfferCard;
@@ -48,13 +49,12 @@ function App(props: AppProps): JSX.Element {
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
           <Route
-            path={AppRoute.Favotites}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
-                <FavoritesScreen />
-              </PrivateRoute>
+              <RequireAuth authorizationStatus={authorizationStatus} />
             }
-          />
+          >
+            <Route element={<FavoritesScreen />} path={AppRoute.Favotites}/>
+          </Route>
           <Route
             path={AppRoute.Offer}
             element={<OfferScreen offers={offers} offerFullCard={offerFullCard} reviews={reviews} />}
