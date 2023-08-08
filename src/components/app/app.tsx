@@ -6,14 +6,13 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PrivateRoute from '../private-route/private-route';
+import PrivateRoute from '../private-route/privete-rout';
 import { OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
-import RequireAuth from '../private-route/privete-rout2';
 
 type AppProps = {
   offerFullCard: OfferCard;
@@ -48,12 +47,11 @@ function App(props: AppProps): JSX.Element {
             }
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
-          <Route
-            element={
-              <RequireAuth authorizationStatus={authorizationStatus} />
-            }
-          >
-            <Route element={<FavoritesScreen />} path={AppRoute.Favotites}/>
+          <Route element={<PrivateRoute authorizationStatus={authorizationStatus} />}>
+            <Route
+              element={<FavoritesScreen />}
+              path={AppRoute.Favotites}
+            />
           </Route>
           <Route
             path={AppRoute.Offer}

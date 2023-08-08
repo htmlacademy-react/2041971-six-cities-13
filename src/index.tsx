@@ -6,8 +6,9 @@ import { offerFullCard } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import { store } from './store';
 import { CITIES } from './const';
-import ErrorMessage from './components/error-message/error-message';
+import { ToastContainer } from 'react-toastify';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions';
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchOffersAction());
 store.dispatch(checkAuthAction());
@@ -19,7 +20,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorMessage />
+      <ToastContainer />
       <App
         offerFullCard={offerFullCard}
         reviews={reviews}

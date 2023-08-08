@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
 
 function User(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -14,9 +18,15 @@ function User(): JSX.Element {
           </Link>
         </li>
         <li className="header__nav-item">
-          <a className="header__nav-link" href="#">
+          <Link
+            className="header__nav-link"
+            to={AppRoute.Main} onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(logoutAction());
+            }}
+          >
             <span className="header__signout">Sign out</span>
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

@@ -4,7 +4,6 @@ import {
   changeSortingType,
   fillOffersList,
   requireAuthorization,
-  setError,
   setOffersDataLoadingStatus,
   loadFavorites,
 } from './action';
@@ -19,7 +18,6 @@ type InitialStateType = {
   offers: Offer[];
   sortingType: SortingType;
   authorizationStatus: AuthorizationStatus;
-  error: string | null;
   isOffersDataLoading: boolean;
   favorites: Offer[];
 }
@@ -29,7 +27,6 @@ const initialState: InitialStateType = {
   offers: [],
   sortingType: DEFAULT_SORT,
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
   isOffersDataLoading: false,
   favorites: [],
 };
@@ -47,9 +44,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;

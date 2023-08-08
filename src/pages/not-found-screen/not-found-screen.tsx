@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import User from '../../components/user/user';
-import Sign from '../../components/sign/sign';
 
 function NotFoundScreen(): JSX.Element {
   return(
@@ -14,12 +13,7 @@ function NotFoundScreen(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <User />
-                <Sign />
-              </ul>
-            </nav>
+            <User />
           </div>
         </div>
       </header>
