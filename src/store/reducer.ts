@@ -6,8 +6,9 @@ import {
   requireAuthorization,
   setOffersDataLoadingStatus,
   loadFavorites,
+  loadOfferById,
 } from './action';
-import { Offer } from '../types/offer';
+import { Offer, OfferCard } from '../types/offer';
 import { SortingType, AuthorizationStatus } from '../const';
 
 const DEFAULT_CITY = 'Paris';
@@ -20,6 +21,7 @@ type InitialStateType = {
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   favorites: Offer[];
+  offer: OfferCard;
 }
 
 const initialState: InitialStateType = {
@@ -29,6 +31,7 @@ const initialState: InitialStateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
   favorites: [],
+  offer: {},
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -50,6 +53,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFavorites, (state, action) => {
       state.favorites = action.payload;
+    })
+    .addCase(loadOfferById, (state, action) => {
+      state.offer = action.payload;
     });
 });
 

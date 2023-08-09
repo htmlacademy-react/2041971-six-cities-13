@@ -1,13 +1,17 @@
 import { Helmet } from 'react-helmet-async';
-import Logo from '../../components/logo/logo';
-import User from '../../components/user/user';
-import Sign from '../../components/sign/sign';
 import PlaceCard from '../../components/place-card/place-card';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import { Offer, OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
+import { useParams } from 'react-router-dom';
+import { fetchOfferByIdAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { useAppSelector } from '../../hooks';
+import { useDispatch } from 'react-redux';
+import { store } from '../../store';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type OfferScreenProps = {
   offers: Offer[];
@@ -17,27 +21,29 @@ type OfferScreenProps = {
 
 function OfferScreen(props: OfferScreenProps):JSX.Element {
   const {offers, offerFullCard, reviews} = props;
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = offerFullCard;
   const neighbourhoods = offers.slice(0,3);
+  const {id} = useParams();
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(fetchOfferByIdAction(id));
+  }, [id, dispatch]);
+
+  const a = useAppSelector((state) => state.offer);
+
+  if (!a) {
+    return (
+      <NotFoundScreen />
+    );
+  }
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = offerFullCard;
+
+  console.log(a)
   return (
     <div className="page">
       <Helmet>
         <title>Шесть городов. {/*будет название отеля*/}</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <User />
-                <Sign />
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
 
       <main className="page__main page__main--offer">
         <section className="offer">

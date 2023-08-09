@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
-import User from '../../components/user/user';
 
 function NotFoundScreen(): JSX.Element {
   return(
@@ -9,14 +7,6 @@ function NotFoundScreen(): JSX.Element {
       <Helmet>
         <title>Шесть городов. Страница не найдена</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <User />
-          </div>
-        </div>
-      </header>
 
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">

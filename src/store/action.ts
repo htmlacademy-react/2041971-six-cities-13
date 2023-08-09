@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Offer } from '../types/offer';
+import { Offer, OfferCard } from '../types/offer';
 import { SortingType } from '../const';
 import { AuthorizationStatus, AppRoute } from '../const';
 
@@ -10,3 +10,4 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requireAu
 export const setOffersDataLoadingStatus = createAction<boolean>('setOffersDataLoadingStatus');
 export const loadFavorites = createAction<{favorites: Offer[]}>('loadFavorites');
 export const redirectToRoute = createAction<AppRoute>('redirectToRoute');
+export const loadOfferById = createAction<{offer: OfferCard}>('loadOfferById');
