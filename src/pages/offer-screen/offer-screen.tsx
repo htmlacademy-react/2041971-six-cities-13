@@ -3,46 +3,48 @@ import PlaceCard from '../../components/place-card/place-card';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
-import { Offer, OfferCard } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { Review } from '../../types/reviews';
 import { useParams } from 'react-router-dom';
 import { fetchOfferByIdAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { useDispatch } from 'react-redux';
-import { store } from '../../store';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
+//import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 type OfferScreenProps = {
   offers: Offer[];
-  offerFullCard: OfferCard;
   reviews: Review[];
 }
 
 function OfferScreen(props: OfferScreenProps):JSX.Element {
-  const {offers, offerFullCard, reviews} = props;
+  const {offers, reviews} = props;
   const neighbourhoods = offers.slice(0,3);
+
   const {id} = useParams();
   const dispatch = useDispatch();
+  const offer = useAppSelector((state) => state.offer);
+  console.log(offer);
+  const fetchingStatus = useAppSelector((state) => state.offerFetchingStatus);
 
   useEffect(() => {
-    dispatch(fetchOfferByIdAction(id));
+
+    if (id) {
+      console.log(1)
+      dispatch(fetchOfferByIdAction(id));
+    }
+
+    // return () => {
+    //   dispatch(dropOffer());
+    // };
   }, [id, dispatch]);
 
-  const a = useAppSelector((state) => state.offer);
-
-  if (!a) {
-    return (
-      <NotFoundScreen />
-    );
-  }
-  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = offerFullCard;
-
-  console.log(a)
+  const {images, isPremium, title, rating, type, bedrooms, maxAdults, price, goods, host, description} = offer;
+  console.log(offer)
   return (
     <div className="page">
       <Helmet>
-        <title>Шесть городов. {/*будет название отеля*/}</title>
+        <title>Шесть городов. {title}</title>
       </Helmet>
 
       <main className="page__main page__main--offer">
@@ -122,7 +124,7 @@ function OfferScreen(props: OfferScreenProps):JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {neighbourhoods.map((offer) => <PlaceCard key={offer.id} offer={offer}/>)}
+              {neighbourhoods.map((offerI) => <PlaceCard key={offerI.id} offer={offerI}/>)}
             </div>
           </section>
         </div>

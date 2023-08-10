@@ -8,7 +8,6 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/privete-rout';
-import { OfferCard } from '../../types/offer';
 import { Review } from '../../types/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
@@ -16,13 +15,12 @@ import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
 
 type AppProps = {
-  offerFullCard: OfferCard;
   reviews: Review[];
   cities: string[];
 };
 
 function App(props: AppProps): JSX.Element {
-  const {offerFullCard, reviews, cities} = props;
+  const {reviews, cities} = props;
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const offers = useAppSelector((state) => state.offers);
@@ -54,7 +52,7 @@ function App(props: AppProps): JSX.Element {
             </Route>
             <Route
               path={`${AppRoute.Offer}:id`}
-              element={<OfferScreen offers={offers} offerFullCard={offerFullCard} reviews={reviews} />}
+              element={<OfferScreen offers={offers} reviews={reviews} />}
             />
             <Route path="*" element={<NotFoundScreen />} />
           </Route>

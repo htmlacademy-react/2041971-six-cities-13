@@ -9,7 +9,8 @@ import {
   loadOfferById,
 } from './action';
 import { Offer, OfferCard } from '../types/offer';
-import { SortingType, AuthorizationStatus } from '../const';
+import { SortingType, AuthorizationStatus, RequestStatus } from '../const';
+import { fetchOfferByIdAction } from './api-actions';
 
 const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT = SortingType.Popular;
@@ -21,7 +22,8 @@ type InitialStateType = {
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   favorites: Offer[];
-  offer: OfferCard;
+  offer: OfferCard | null;
+  offerFetchingStatus: RequestStatus;
 }
 
 const initialState: InitialStateType = {
@@ -31,7 +33,8 @@ const initialState: InitialStateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
   favorites: [],
-  offer: {},
+  offer: null,
+  offerFetchingStatus: RequestStatus.Idle,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -56,6 +59,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOfferById, (state, action) => {
       state.offer = action.payload;
+    })
+    .addCase(fetchOfferByIdAction.pending, (state) => {
+      state.offerFetchingStatus = RequestStatus.Pending;
+    })
+    .addCase(fetchOfferByIdAction.fulfilled, (state) => {
+      state.offerFetchingStatus = RequestStatus.Success;
     });
 });
 

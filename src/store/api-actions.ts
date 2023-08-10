@@ -37,7 +37,7 @@ export const fetchOfferByIdAction = createAsyncThunk<void, string, {
     'fetchOfferById',
     async (offerId, {dispatch, extra: api}) => {
       const {data} = await api.get<OfferCard>(`${APIRoute.Offers}/${offerId}`);
-      dispatch(loadOfferById({offer: data}));
+      dispatch(loadOfferById(data));
     },
   );
 
@@ -51,7 +51,7 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
       dispatch(setOffersDataLoadingStatus(true));
       const {data} = await api.get<Offer[]>(APIRoute.Faforite);
       dispatch(setOffersDataLoadingStatus(false));
-      dispatch(loadFavorites({favorites: data}));
+      dispatch(loadFavorites(data));
     },
   );
 
@@ -77,8 +77,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
+  async (login, {dispatch, extra: api}) => {
+    const {data: {token}} = await api.post<UserData>(APIRoute.Login, login);
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Main));
   },
