@@ -7,10 +7,14 @@ import {
   setOffersDataLoadingStatus,
   loadFavorites,
   loadOfferById,
+  loadNearbyOffers,
+  loadComments,
+  sendComment,
 } from './action';
 import { Offer, OfferCard } from '../types/offer';
 import { SortingType, AuthorizationStatus, RequestStatus } from '../const';
 import { fetchOfferByIdAction } from './api-actions';
+import { Comment, Review } from '../types/reviews';
 
 const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT = SortingType.Popular;
@@ -24,6 +28,9 @@ type InitialStateType = {
   favorites: Offer[];
   offer: OfferCard | null;
   offerFetchingStatus: RequestStatus;
+  nearbyOffers: Offer[];
+  comments: Review[];
+  comment: Comment | null;
 }
 
 const initialState: InitialStateType = {
@@ -35,6 +42,9 @@ const initialState: InitialStateType = {
   favorites: [],
   offer: null,
   offerFetchingStatus: RequestStatus.Idle,
+  nearbyOffers: [],
+  comments: [],
+  comment: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -65,6 +75,18 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchOfferByIdAction.fulfilled, (state) => {
       state.offerFetchingStatus = RequestStatus.Success;
+    })
+    .addCase(fetchOfferByIdAction.rejected, (state) => {
+      state.offerFetchingStatus = RequestStatus.Error;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(sendComment, (state, action) => {
+      state.comment = action.payload;
     });
 });
 

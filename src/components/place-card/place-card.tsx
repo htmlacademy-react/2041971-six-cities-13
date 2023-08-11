@@ -4,7 +4,7 @@ import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
-  onCardHover: (offer: Offer) => void;
+  onCardHover?: (offer: Offer) => void;
 }
 
 function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
