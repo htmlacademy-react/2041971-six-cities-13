@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef, MutableRefObject } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Map, TileLayer } from 'leaflet';
 import { Location } from '../types/offer';
 
 type MapProps = {
-  mapRef: MutableRefObject<HTMLElement | null>;
   cityLocation: Location;
 }
 
-function useMap({mapRef, cityLocation}: MapProps): Map | null {
+function useMap({cityLocation}: MapProps) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
@@ -34,7 +34,10 @@ function useMap({mapRef, cityLocation}: MapProps): Map | null {
     }
   }, [mapRef, cityLocation]);
 
-  return map;
+  return {
+    map,
+    mapRef
+  };
 }
 
 export default useMap;
