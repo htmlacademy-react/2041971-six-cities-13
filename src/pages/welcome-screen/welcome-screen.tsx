@@ -1,24 +1,20 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppSelector } from '../../hooks';
-import Logo from '../../components/logo/logo';
-import User from '../../components/user/user';
-import Sign from '../../components/sign/sign';
 import PlaceCardList from '../../components/place-card-list/place-card-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import Sorting from '../../components/sorting/sorting';
 import { Offer } from '../../types/offer';
-import { CITIES, AuthorizationStatus } from '../../const';
+import { CITIES } from '../../const';
 import { sorting } from '../../utils';
 import { useState } from 'react';
 
 type WelcomeScreenProps = {
     offers: Offer[];
     cities: typeof CITIES;
-    authorizationStatus: AuthorizationStatus;
 }
 
-function WelcomeScreen({offers, cities, authorizationStatus}: WelcomeScreenProps): JSX.Element {
+function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
   const city = useAppSelector((state) => state.city);
   const sortingType = useAppSelector((state) => state.sortingType);
   const currentOffers = sorting[sortingType](offers.filter((offer) => offer.city.name === city));
@@ -36,14 +32,6 @@ function WelcomeScreen({offers, cities, authorizationStatus}: WelcomeScreenProps
       <Helmet>
         <title>Шесть городов. Главная страница</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            {authorizationStatus === AuthorizationStatus.Auth ? <User /> : <Sign />}
-          </div>
-        </div>
-      </header>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

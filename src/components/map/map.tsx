@@ -3,12 +3,12 @@ import './map.css';
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import useMap from '../../hooks/use-map';
-import { Offer } from '../../types/offer';
+import { Offer, OfferCard } from '../../types/offer';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 
 type MapProps = {
     offers: Offer[];
-    selectedOffer: Offer | undefined;
+    selectedOffer?: Offer | OfferCard |undefined;
 }
 
 const defaultCustomIcon = new Icon({
@@ -24,7 +24,7 @@ const currentCustomIcon = new Icon({
 });
 
 function Map({offers, selectedOffer}: MapProps): JSX.Element {
-  const cityLocation = offers[0].city.location;
+  const cityLocation = offers[0]?.city.location;
 
   const {map, mapRef} = useMap({cityLocation});
 
@@ -32,10 +32,10 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
     if (map) {
       map.setView(
         {
-          lat: cityLocation.latitude,
-          lng: cityLocation.longitude,
+          lat: cityLocation?.latitude,
+          lng: cityLocation?.longitude,
         },
-        cityLocation.zoom,
+        cityLocation?.zoom,
       );
     }
   }, [map, cityLocation]);
@@ -43,6 +43,15 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
+      if (selectedOffer) {
+        const markerSelected = new Marker({
+          lat: selectedOffer.location.latitude,
+          lng: selectedOffer.location.longitude,
+        });
+        markerSelected
+          .setIcon(currentCustomIcon)
+          .addTo(markerLayer);
+      }
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,

@@ -1,7 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import Logo from '../../components/logo/logo';
-import User from '../../components/user/user';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { useAppSelector } from '../../hooks';
@@ -17,14 +15,6 @@ function FavoritesScreen(): JSX.Element {
       <Helmet>
         <title>Шесть городов. Выбранные места</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo />
-            <User />
-          </div>
-        </div>
-      </header>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
