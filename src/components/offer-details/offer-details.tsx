@@ -87,12 +87,12 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
           <section className="offer__reviews reviews">
             <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
             <ReviewsList reviews={reviews} />
-            {authorizationStatus === AuthorizationStatus.Auth && <CommentForm />}
+            {authorizationStatus === AuthorizationStatus.Auth && <CommentForm id={id} />}
           </section>
         </div>
       </div>
     </>
   );
-};
+}
 
 export default OfferDetails;
