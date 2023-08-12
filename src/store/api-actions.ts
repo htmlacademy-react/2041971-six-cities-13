@@ -69,14 +69,15 @@ export const fetchCommentsAction = createAsyncThunk<void, string, {
     },
   );
 
-export const fetchSendCommentAction = createAsyncThunk<void, string, {
+export const fetchSendCommentAction = createAsyncThunk<void, {rating: number; comment: string; id: string}, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
-    'fetchsendComment',
-    async (offerId, {dispatch, extra: api}) => {
-      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${offerId}`);
+    'fetchSgtghgnfnhbendComment',
+    async ({rating, comment, id}, {dispatch, extra: api}) => {
+      //console.log(review)
+      const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {rating, comment});
       dispatch(sendComment(data));
     },
   );

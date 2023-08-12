@@ -30,13 +30,15 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      map.setView(
-        {
-          lat: cityLocation?.latitude,
-          lng: cityLocation?.longitude,
-        },
-        cityLocation?.zoom,
-      );
+      if (cityLocation) {
+        map.setView(
+          {
+            lat: cityLocation.latitude,
+            lng: cityLocation.longitude,
+          },
+          cityLocation.zoom,
+        );
+      }
     }
   }, [map, cityLocation]);
 

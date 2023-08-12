@@ -14,5 +14,5 @@ export type Review = {
 
 export type Comment = {
     comment: string;
-    rating: number;
+    ratingData: number;
 };

@@ -10,10 +10,16 @@ type PlaceCardProps = {
 function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, title, type, id} = offer;
 
+  const handlerCardHover = (card: Offer) => {
+    if (onCardHover) {
+      onCardHover(card);
+    }
+  };
+
   return (
     <article className="cities__card place-card"
       id={id}
-      onMouseEnter={() => onCardHover(offer)}
+      onMouseEnter={() => handlerCardHover(offer)}
     >
       {isPremium
         ? <div className="place-card__mark"><span>Premium</span></div>
