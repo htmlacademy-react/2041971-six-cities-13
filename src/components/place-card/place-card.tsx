@@ -4,16 +4,22 @@ import { AppRoute } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
-  onCardHover: (offer: Offer) => void;
+  onCardHover?: (offer: Offer) => void;
 }
 
 function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, title, type, id} = offer;
 
+  const handlerCardHover = (card: Offer) => {
+    if (onCardHover) {
+      onCardHover(card);
+    }
+  };
+
   return (
     <article className="cities__card place-card"
       id={id}
-      onMouseEnter={() => onCardHover(offer)}
+      onMouseEnter={() => handlerCardHover(offer)}
     >
       {isPremium
         ? <div className="place-card__mark"><span>Premium</span></div>
@@ -46,8 +52,8 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <Link to={AppRoute.Offer}>{title}</Link>
+        <h2 className="place-card__name" >
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

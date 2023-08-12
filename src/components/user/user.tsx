@@ -20,7 +20,7 @@ function User(): JSX.Element {
         <li className="header__nav-item">
           <Link
             className="header__nav-link"
-            to={AppRoute.Main} onClick={(evt) => {
+            to={AppRoute.Login} onClick={(evt) => {
               evt.preventDefault();
               dispatch(logoutAction());
             }}

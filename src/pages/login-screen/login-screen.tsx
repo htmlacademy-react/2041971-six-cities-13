@@ -1,25 +1,22 @@
 import { Helmet } from 'react-helmet-async';
-import { FormEvent, useRef } from 'react';
+import { FormEvent } from 'react';
 import Logo from '../../components/logo/logo';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-//import { AppRoute } from '../../const';
-//import { useNavigate } from 'react-router-dom';
+import { AuthData } from '../../types/auth-data';
 
 function LoginScreen(): JSX.Element {
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
-  //const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      }));
+    const form = evt.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData) as AuthData;
+
+    if (data !== null) {
+      dispatch(loginAction(data));
     }
   };
 
@@ -54,7 +51,6 @@ function LoginScreen(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
-                  ref={loginRef}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -65,13 +61,11 @@ function LoginScreen(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
-                  ref={passwordRef}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                // onClick={() => navigate(AppRoute.Main)}
               >Sign in
               </button>
             </form>
