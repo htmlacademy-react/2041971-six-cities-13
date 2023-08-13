@@ -31,6 +31,7 @@ type InitialStateType = {
   nearbyOffers: Offer[];
   comments: Review[];
   comment: Comment | null;
+  userLogin: string | null;
 }
 
 const initialState: InitialStateType = {
@@ -45,6 +46,7 @@ const initialState: InitialStateType = {
   nearbyOffers: [],
   comments: [],
   comment: null,
+  userLogin: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {

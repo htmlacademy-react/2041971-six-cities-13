@@ -1,25 +1,45 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
+import { useState } from 'react';
+import { getRatingStarsStyle } from '../../utils';
+import FavoriteButton from '../favorite-button/favorite-button';
 
 type PlaceCardProps = {
   offer: Offer;
-  onCardHover?: (offer: Offer) => void;
+  onCardHover?: (offer?: Offer) => void;
 }
 
 function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
-  const {isPremium, previewImage, price, title, type, id} = offer;
+  const {isPremium, previewImage, price, title, type, id, isFavorite, rating} = offer;
+  const dispatch = useAppDispatch();
+  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean>(isFavorite);
+  const status = Number(!isFavoriteOffer);
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const navigate = useNavigate();
+  const isOfferFullCard = false;
 
-  const handlerCardHover = (card: Offer) => {
+  const handlerCardHover = (card?: Offer) => {
     if (onCardHover) {
       onCardHover(card);
     }
+  };
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      return navigate(AppRoute.Login);
+    }
+    setFavoriteOffer((prevState) => !prevState);
+    dispatch(fetchChangeStatusFavoriteAction({status, id}));
   };
 
   return (
     <article className="cities__card place-card"
       id={id}
       onMouseEnter={() => handlerCardHover(offer)}
+      onMouseLeave={() => handlerCardHover()}
     >
       {isPremium
         ? <div className="place-card__mark"><span>Premium</span></div>
@@ -35,17 +55,12 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width={18} height={19}>
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoriteButton isFavoriteOffer={isFavoriteOffer} onFavoriteClick={handleFavoriteClick} isOfferFullCard={isOfferFullCard} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{
-              width: '80%',
+              width: getRatingStarsStyle(rating),
             }}
             >
             </span>

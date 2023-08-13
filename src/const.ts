@@ -1,7 +1,7 @@
 export enum AppRoute {
   Main = '/',
   Login = '/login',
-  Favotites = '/favorites',
+  Favorites = '/favorites',
   Offer = '/offer/',
 }
 
@@ -32,7 +32,7 @@ export enum SortingType {
 export enum APIRoute {
   Offers = '/offers',
   OffersNearBy = '/nearby',
-  Faforite = '/favorite',
+  Favorite = '/favorite',
   Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
@@ -44,3 +44,5 @@ export enum RequestStatus {
   Success = 'Success',
   Error = 'Error',
 }
+
+export const RATING_KOEF = 20;

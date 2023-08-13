@@ -1,19 +1,16 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, fillOffersList } from '../../store/action';
-import { Offer } from '../../types/offer';
+import { changeCity } from '../../store/action';
 import classNames from 'classnames';
 
 type CitiesListProps = {
   cities: string[];
-  offers: Offer[];
 }
 
-function CitiesList({cities, offers}: CitiesListProps): JSX.Element {
+function CitiesList({cities}: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityCheck = (city: string) => {
     dispatch(changeCity({city}));
-    dispatch(fillOffersList({offers}));
   };
 
   const activeCity = useAppSelector((state) => state.city);

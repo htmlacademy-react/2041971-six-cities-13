@@ -1,12 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import { FormEvent } from 'react';
 import Logo from '../../components/logo/logo';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
+import { AuthorizationStatus, AppRoute } from '../../const';
+import { Navigate } from 'react-router-dom';
 
 function LoginScreen(): JSX.Element {
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
   const dispatch = useAppDispatch();
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

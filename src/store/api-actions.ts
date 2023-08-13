@@ -15,6 +15,7 @@ import {
   sendComment,
 } from './action';
 import { dropToken, saveToken } from '../services/token';
+import { dropUserEmail, saveUserEmail } from '../services/user';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { Comment, Review } from '../types/reviews';
@@ -74,9 +75,8 @@ export const fetchSendCommentAction = createAsyncThunk<void, {rating: number; co
     state: State;
     extra: AxiosInstance;
   }>(
-    'fetchSgtghgnfnhbendComment',
+    'fetchSendComment',
     async ({rating, comment, id}, {dispatch, extra: api}) => {
-      //console.log(review)
       const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {rating, comment});
       dispatch(sendComment(data));
     },
@@ -90,9 +90,21 @@ export const fetchFavoritesAction = createAsyncThunk<void, undefined, {
     'fetchFavorites',
     async (_arg, {dispatch, extra: api}) => {
       dispatch(setOffersDataLoadingStatus(true));
-      const {data} = await api.get<Offer[]>(APIRoute.Faforite);
+      const {data} = await api.get<Offer[]>(APIRoute.Favorite);
       dispatch(setOffersDataLoadingStatus(false));
       dispatch(loadFavorites(data));
+    },
+  );
+
+export const fetchChangeStatusFavoriteAction = createAsyncThunk<Offer, {status: number; id: string}, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'fetchSendComment',
+    async ({status, id}, { extra: api}) => {
+      const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${status}`);
+      return data;
     },
   );
 
@@ -119,8 +131,10 @@ export const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async (login, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(APIRoute.Login, login);
-    saveToken(token);
+    const {data} = await api.post<UserData>(APIRoute.Login, login);
+    saveToken(data.token);
+    saveUserEmail(data.email);
+    dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Main));
   },
 );
@@ -134,7 +148,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-
+    dropUserEmail();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );

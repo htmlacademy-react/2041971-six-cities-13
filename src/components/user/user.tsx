@@ -1,26 +1,30 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getUserEmail } from '../../services/user';
 
 function User(): JSX.Element {
   const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.favorites);
+  const userName = getUserEmail();
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         <li className="header__nav-item user">
-          <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favotites}>
+          <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-            <span className="header__favorite-count">3</span>
+            <span className="header__user-name user__name">{userName}</span>
+            <span className="header__favorite-count">{favorites.length}</span>
           </Link>
         </li>
         <li className="header__nav-item">
           <Link
             className="header__nav-link"
-            to={AppRoute.Login} onClick={(evt) => {
+            to={AppRoute.Login}
+            onClick={(evt) => {
               evt.preventDefault();
               dispatch(logoutAction());
             }}
