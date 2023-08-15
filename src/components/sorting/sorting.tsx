@@ -1,16 +1,17 @@
 import { SortingType } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeSortingType } from '../../store/action';
+import { changeSortingType } from '../../store/offers-process/offers-process.slice';
 import { useState } from 'react';
+import { getSortingType } from '../../store/offers-process/offers-process.selector';
 
 function Sorting(): JSX.Element {
-  const activeSortingType = useAppSelector((state) => state.sortingType);
+  const activeSortingType = useAppSelector(getSortingType);
   const dispatch = useAppDispatch();
   const [isOpened, setIsOpened] = useState(false);
 
   const handleSortingClick = (type: SortingType) => {
-    dispatch(changeSortingType({type}));
+    dispatch(changeSortingType(type));
   };
 
   return (

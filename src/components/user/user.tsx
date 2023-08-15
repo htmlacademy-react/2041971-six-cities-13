@@ -3,10 +3,11 @@ import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserEmail } from '../../services/user';
+import { getFavorites } from '../../store/favorite-process/favorite-process.selector';
 
 function User(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
   const userName = getUserEmail();
 
   return (

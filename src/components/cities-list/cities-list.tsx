@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store/offers-process/offers-process.slice';
 import classNames from 'classnames';
+import { getCity } from '../../store/offers-process/offers-process.selector';
 
 type CitiesListProps = {
   cities: string[];
@@ -10,10 +11,10 @@ function CitiesList({cities}: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityCheck = (city: string) => {
-    dispatch(changeCity({city}));
+    dispatch(changeCity(city));
   };
 
-  const activeCity = useAppSelector((state) => state.city);
+  const activeCity = useAppSelector(getCity);
 
   return(
     <ul className="locations__list tabs__list">

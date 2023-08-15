@@ -9,6 +9,8 @@ import { fetchCommentsAction } from '../../store/api-actions';
 import { getRatingStarsStyle } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { getComments } from '../../store/offer-id-process/offer-id-process.selector';
 
 type OfferDetailsProps = {
     offer: OfferCard;
@@ -16,8 +18,8 @@ type OfferDetailsProps = {
 
 function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
   const {id, images, isPremium, title, rating, type, bedrooms, maxAdults, price, host, goods, description, isFavorite} = offer;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const reviews = useAppSelector((state) => state.comments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const reviews = useAppSelector(getComments);
   const dispatch = useAppDispatch();
   const offerImages = images.slice(0,6);
   const isOfferFullCard = true;

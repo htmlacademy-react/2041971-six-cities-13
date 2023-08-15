@@ -6,9 +6,10 @@ import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { Navigate } from 'react-router-dom';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 
 function LoginScreen(): JSX.Element {
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   if (authorizationStatus === AuthorizationStatus.Auth) {

@@ -46,3 +46,10 @@ export enum RequestStatus {
 }
 
 export const RATING_KOEF = 20;
+
+export enum NameSpace {
+  Favorites = 'FAVORITES',
+  OfferById = 'OFFER_BY_ID',
+  Offers = 'OFFERS',
+  User = 'USER',
+}

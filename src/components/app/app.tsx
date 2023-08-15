@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import Layout from '../layout/layout';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -12,6 +12,9 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { getOffers, getOffersDataLoadingStatus, getErrorStatus } from '../../store/offers-process/offers-process.selector';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 
 type AppProps = {
   cities: string[];
@@ -19,14 +22,20 @@ type AppProps = {
 
 function App(props: AppProps): JSX.Element {
   const {cities} = props;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
-  const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isAuthChecked = useAppSelector(getAuthCheckedStatus);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
+  const hasError = useAppSelector(getErrorStatus);
+  const offers = useAppSelector(getOffers);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  if (!isAuthChecked || isOffersDataLoading) {
     return (
       <LoadingScreen />
     );
+  }
+
+  if (hasError) {
+    return (<ErrorScreen />);
   }
 
   return (

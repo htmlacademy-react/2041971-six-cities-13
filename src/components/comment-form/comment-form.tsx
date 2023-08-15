@@ -1,7 +1,5 @@
-//import { ChangeEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { FormEvent } from 'react';
-import { Comment } from '../../types/reviews';
 import { fetchSendCommentAction } from '../../store/api-actions';
 
 type CommentFormProps = {
@@ -16,7 +14,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
 
     const form = evt.currentTarget;
     const formData = new FormData(form);
-    const {ratingData, comment} = Object.fromEntries(formData) as Comment;
+    const {ratingData, comment} = Object.fromEntries(formData);
     const rating = Number(ratingData);
 
     if (rating !== null) {
@@ -100,6 +98,8 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
         id="review"
         name="comment"
         placeholder="Tell how was your stay, what you like and what can be improved"
+        minLength={50}
+        maxLength={300}
       >
       </textarea>
       <div className="reviews__button-wrapper">

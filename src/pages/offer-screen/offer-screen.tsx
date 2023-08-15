@@ -6,17 +6,16 @@ import { fetchNearbyOffersAction, fetchOfferByIdAction } from '../../store/api-a
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { useDispatch } from 'react-redux';
-import { RequestStatus } from '../../const';
-import LoadingScreen from '../loading-screen/loading-screen';
+//import LoadingScreen from '../loading-screen/loading-screen';
 import OfferDetails from '../../components/offer-details/offer-details';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
+//import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { getOfferById, getNearbyOffers } from '../../store/offer-id-process/offer-id-process.selector';
 
 function OfferScreen():JSX.Element {
   const {id} = useParams();
   const dispatch = useDispatch();
-  const offer = useAppSelector((state) => state.offer);
-  const neighbourhoods = useAppSelector((state) => state.nearbyOffers).slice(0,3);
-  const fetchingStatus = useAppSelector((state) => state.offerFetchingStatus);
+  const offer = useAppSelector(getOfferById);
+  const neighbourhoods = useAppSelector(getNearbyOffers).slice(0,3);
 
   useEffect(() => {
     if (id) {
@@ -27,9 +26,7 @@ function OfferScreen():JSX.Element {
 
   return (
     <div className="page">
-      {fetchingStatus === RequestStatus.Error && <NotFoundScreen />}
-      {fetchingStatus === RequestStatus.Pending && <LoadingScreen />}
-      {fetchingStatus === RequestStatus.Success && offer && (
+      {offer && (
         <>
           <Helmet>
             <title>{`${offer.city.name}. ${offer.title}`}</title>

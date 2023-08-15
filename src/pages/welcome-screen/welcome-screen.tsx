@@ -6,6 +6,7 @@ import { Offer } from '../../types/offer';
 import { CITIES } from '../../const';
 import { sorting } from '../../utils';
 import MainDisplay from '../../components/main-display/main-display';
+import { getCity, getSortingType } from '../../store/offers-process/offers-process.selector';
 
 type WelcomeScreenProps = {
     offers: Offer[];
@@ -13,8 +14,8 @@ type WelcomeScreenProps = {
 }
 
 function WelcomeScreen({offers, cities}: WelcomeScreenProps): JSX.Element {
-  const city = useAppSelector((state) => state.city);
-  const sortingType = useAppSelector((state) => state.sortingType);
+  const city = useAppSelector(getCity);
+  const sortingType = useAppSelector(getSortingType);
   const currentOffers = sorting[sortingType](offers.filter((offer) => offer.city.name === city));
 
   return (

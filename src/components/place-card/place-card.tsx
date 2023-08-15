@@ -6,6 +6,7 @@ import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
 import { useState } from 'react';
 import { getRatingStarsStyle } from '../../utils';
 import FavoriteButton from '../favorite-button/favorite-button';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -17,7 +18,7 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [isFavoriteOffer, setFavoriteOffer] = useState<boolean>(isFavorite);
   const status = Number(!isFavoriteOffer);
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
   const isOfferFullCard = false;
 
