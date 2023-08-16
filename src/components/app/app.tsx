@@ -16,12 +16,7 @@ import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-p
 import { getOffers, getOffersDataLoadingStatus, getErrorStatus } from '../../store/offers-process/offers-process.selector';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 
-type AppProps = {
-  cities: string[];
-};
-
-function App(props: AppProps): JSX.Element {
-  const {cities} = props;
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isAuthChecked = useAppSelector(getAuthCheckedStatus);
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
@@ -47,7 +42,6 @@ function App(props: AppProps): JSX.Element {
               index element={
                 <WelcomeScreen
                   offers={offers}
-                  cities={cities}
                 />
               }
             />
