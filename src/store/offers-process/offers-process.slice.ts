@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, SortingType } from '../../const';
 import { OffersProcess } from '../../types/state';
-import { fetchOffersAction } from '../api-actions';
+import { fetchChangeStatusFavoriteAction, fetchOffersAction } from '../api-actions';
 
 const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT = SortingType.Popular;
@@ -38,6 +38,15 @@ export const offersProcess = createSlice({
       .addCase(fetchOffersAction.rejected, (state) => {
         state.isOffersDataLoading = false;
         state.hasError = true;
+      })
+      .addCase(fetchChangeStatusFavoriteAction.fulfilled, (state, action) => {
+        state.offers = state.offers.reduce((acc, offer) => {
+          if (offer.id === action.payload.id) {
+            return [...acc, {...offer,
+              isFavorite: !offer.isFavorite}];
+          }
+          return [...acc, offer];
+        }, []);
       });
   }
 });

@@ -8,3 +8,4 @@ export const getOfferDataLoadingStatus = (state: State): boolean => state[NameSp
 export const getNearbyOffers = (state: State): Offer[] => state[NameSpace.OfferById].nearbyOffers;
 export const getComments = (state: State): Review[] => state[NameSpace.OfferById].comments;
 export const sendComment = (state: State): Comment => state[NameSpace.OfferById].comment;
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Offers].hasError;

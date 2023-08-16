@@ -3,11 +3,11 @@ import { AppRoute } from '../../const';
 import { logoutAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserEmail } from '../../services/user';
-import { getFavorites } from '../../store/favorite-process/favorite-process.selector';
+import { getFavoritesCount } from '../../store/favorite-process/favorite-process.selector';
 
 function User(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector(getFavorites);
+  const favoritesCount = useAppSelector(getFavoritesCount);
   const userName = getUserEmail();
 
   return (
@@ -18,7 +18,7 @@ function User(): JSX.Element {
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
             <span className="header__user-name user__name">{userName}</span>
-            <span className="header__favorite-count">{favorites.length}</span>
+            <span className="header__favorite-count">{favoritesCount}</span>
           </Link>
         </li>
         <li className="header__nav-item">

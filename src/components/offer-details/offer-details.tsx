@@ -4,7 +4,7 @@ import ReviewsList from '../../components/reviews-list/reviews-list';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppRoute } from '../../const';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { fetchCommentsAction } from '../../store/api-actions';
 import { getRatingStarsStyle } from '../../utils';
 import { useNavigate } from 'react-router-dom';
@@ -23,15 +23,13 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
   const offerImages = images.slice(0,6);
   const isOfferFullCard = true;
-  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean>(isFavorite);
-  const status = Number(!isFavoriteOffer);
+  const status = Number(!isFavorite);
   const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       return navigate(AppRoute.Login);
     }
-    setFavoriteOffer((prevState) => !prevState);
     dispatch(fetchChangeStatusFavoriteAction({status, id}));
   };
 
@@ -57,7 +55,7 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
           {isPremium && <div className="offer__mark"><span>Premium</span></div>}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{title}</h1>
-            <FavoriteButton onFavoriteClick={handleFavoriteClick} isFavoriteOffer={isFavoriteOffer} isOfferFullCard={isOfferFullCard} />
+            <FavoriteButton onFavoriteClick={handleFavoriteClick} isFavoriteOffer={isFavorite} isOfferFullCard={isOfferFullCard} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">

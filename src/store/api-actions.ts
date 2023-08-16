@@ -58,14 +58,15 @@ export const fetchCommentsAction = createAsyncThunk<Review[], string, {
     },
   );
 
-export const fetchSendCommentAction = createAsyncThunk<Comment, {rating: number; comment: FormDataEntryValue; id: string}, {
+export const fetchSendCommentAction = createAsyncThunk<Comment | null, {rating: number; comment: FormDataEntryValue; id: string}, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
     'fetchSendComment',
-    async ({rating, comment, id}, {extra: api}) => {
+    async ({rating, comment, id}, {dispatch, extra: api}) => {
       const {data} = await api.post<Comment>(`${APIRoute.Comments}/${id}`, {rating, comment});
+      dispatch(fetchCommentsAction(id));
       return data;
     },
   );
@@ -82,14 +83,15 @@ export const fetchFavoritesAction = createAsyncThunk<Offer[], undefined, {
     },
   );
 
-export const fetchChangeStatusFavoriteAction = createAsyncThunk<void, {status: number; id: string}, {
+export const fetchChangeStatusFavoriteAction = createAsyncThunk<Offer, {status: number; id: string}, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
   }>(
     'fetchChangeStatusFavorite',
     async ({status, id}, {extra: api}) => {
-      await api.post<Offer>(`${APIRoute.Favorite}/${id}/${status}`);
+      const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${status}`);
+      return data;
     },
   );
 

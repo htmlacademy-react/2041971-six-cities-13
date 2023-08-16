@@ -21,6 +21,7 @@ export type OfferIdProcess = {
   nearbyOffers: Offer[];
   comments: Review[];
   comment: Comment | null;
+  hasError: boolean;
 }
 
 export type FavoriteProcess = {

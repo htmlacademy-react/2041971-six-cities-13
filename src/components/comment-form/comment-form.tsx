@@ -1,12 +1,15 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent } from 'react';
 import { fetchSendCommentAction } from '../../store/api-actions';
+import { getErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
 
 type CommentFormProps = {
   id: string;
 }
 
 function CommentForm({id}: CommentFormProps): JSX.Element {
+  const hasError = useAppSelector(getErrorStatus);
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -17,8 +20,12 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
     const {ratingData, comment} = Object.fromEntries(formData);
     const rating = Number(ratingData);
 
-    if (rating !== null) {
+    if (rating !== null && comment !== null) {
       dispatch(fetchSendCommentAction({rating, comment, id}));
+    }
+
+    if (!hasError) {
+      form.reset();
     }
   };
 
