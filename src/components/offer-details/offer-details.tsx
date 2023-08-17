@@ -1,20 +1,37 @@
 import { OfferCard } from '../../types/offer';
 import CommentForm from '../../components/comment-form/comment-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
+import FavoriteButton from '../favorite-button/favorite-button';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../const';
+import { AuthorizationStatus, AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { fetchCommentsAction } from '../../store/api-actions';
+import { getRatingStarsStyle } from '../../utils';
+import { useNavigate } from 'react-router-dom';
+import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { getComments } from '../../store/offer-id-process/offer-id-process.selector';
 
 type OfferDetailsProps = {
     offer: OfferCard;
 };
 
 function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
-  const {id, images, isPremium, title, rating, type, bedrooms, maxAdults, price, host, goods, description} = offer;
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const reviews = useAppSelector((state) => state.comments);
+  const {id, images, isPremium, title, rating, type, bedrooms, maxAdults, price, host, goods, description, isFavorite} = offer;
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const reviews = useAppSelector(getComments);
   const dispatch = useAppDispatch();
+  const offerImages = images.slice(0,6);
+  const isOfferFullCard = true;
+  const status = Number(!isFavorite);
+  const navigate = useNavigate();
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      return navigate(AppRoute.Login);
+    }
+    dispatch(fetchChangeStatusFavoriteAction({status, id}));
+  };
 
   useEffect(() => {
     if (id) {
@@ -26,7 +43,7 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
     <>
       <div className="offer__gallery-container container">
         <div className="offer__gallery">
-          {images.map((image) => (
+          {offerImages.map((image) => (
             <div key={image} className="offer__image-wrapper">
               <img className="offer__image" src={image} alt="Photo studio" />
             </div>
@@ -38,17 +55,12 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
           {isPremium && <div className="offer__mark"><span>Premium</span></div>}
           <div className="offer__name-wrapper">
             <h1 className="offer__name">{title}</h1>
-            <button className="offer__bookmark-button button" type="button">
-              <svg className="offer__bookmark-icon" width={31} height={33}>
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">To bookmarks</span>
-            </button>
+            <FavoriteButton onFavoriteClick={handleFavoriteClick} isFavoriteOffer={isFavorite} isOfferFullCard={isOfferFullCard} />
           </div>
           <div className="offer__rating rating">
             <div className="offer__stars rating__stars">
               <span style={{
-                width: '80%'
+                width: getRatingStarsStyle(rating)
               }}
               >
               </span>
@@ -75,7 +87,7 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
             <h2 className="offer__host-title">Meet the host</h2>
             <div className="offer__host-user user">
               <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
+                <img className="offer__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
               </div>
               <span className="offer__user-name">{host.name}</span>
               {host.isPro && <span className="offer__user-status">Pro</span>}

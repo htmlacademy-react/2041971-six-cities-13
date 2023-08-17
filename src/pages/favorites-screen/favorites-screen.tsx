@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { useAppSelector } from '../../hooks';
+import { getFavorites } from '../../store/favorite-process/favorite-process.selector';
 //import { store } from '../../store';
 //import { fetchFavoritesAction } from '../../store/api-actions';
 
 function FavoritesScreen(): JSX.Element {
   //store.dispatch(fetchFavoritesAction());
-  const favorites = useAppSelector((state) => state.favorites);
+  const favorites = useAppSelector(getFavorites);
 
   return (
     <div className="page">
