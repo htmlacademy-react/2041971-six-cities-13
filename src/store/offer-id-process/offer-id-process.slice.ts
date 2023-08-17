@@ -41,6 +41,7 @@ export const offerIdProcess = createSlice({
       })
       .addCase(fetchSendCommentAction.pending, (state) => {
         state.isOfferDataLoading = true;
+        state.hasError = true;
       })
       .addCase(fetchSendCommentAction.fulfilled, (state, action) => {
         state.comment = action.payload;

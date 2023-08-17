@@ -3,7 +3,6 @@ import { Offer } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
-import { useState } from 'react';
 import { getRatingStarsStyle } from '../../utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
@@ -16,8 +15,7 @@ type PlaceCardProps = {
 function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, title, type, id, isFavorite, rating} = offer;
   const dispatch = useAppDispatch();
-  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean>(isFavorite);
-  const status = Number(!isFavoriteOffer);
+  const status = Number(!isFavorite);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const navigate = useNavigate();
   const isOfferFullCard = false;
@@ -32,7 +30,6 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
       return navigate(AppRoute.Login);
     }
-    setFavoriteOffer((prevState) => !prevState);
     dispatch(fetchChangeStatusFavoriteAction({status, id}));
   };
 
@@ -56,7 +53,7 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <FavoriteButton isFavoriteOffer={isFavoriteOffer} onFavoriteClick={handleFavoriteClick} isOfferFullCard={isOfferFullCard} />
+          <FavoriteButton isFavoriteOffer={isFavorite} onFavoriteClick={handleFavoriteClick} isOfferFullCard={isOfferFullCard} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

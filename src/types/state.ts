@@ -27,6 +27,7 @@ export type OfferIdProcess = {
 export type FavoriteProcess = {
   favorites: Offer[];
   isFavoritesDataLoading: boolean;
+  hasError: boolean;
 }
 
 export type State = ReturnType<typeof store.getState>;
