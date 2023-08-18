@@ -18,6 +18,9 @@ export type OffersProcess = {
 export type OfferIdProcess = {
   offer: OfferCard | null;
   isOfferDataLoading: boolean;
+  isNearbyLoading: boolean;
+  isCommentsLoading: boolean;
+  isCommentSending: boolean;
   nearbyOffers: Offer[];
   comments: Review[];
   comment: Comment | null;

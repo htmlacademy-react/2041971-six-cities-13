@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent } from 'react';
 import { fetchSendCommentAction } from '../../store/api-actions';
-import { getErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
+import { getErrorStatus} from '../../store/offer-id-process/offer-id-process.selector';
 
 type CommentFormProps = {
   id: string;

@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
-import { getRatingStarsStyle } from '../../utils';
+import { getRatingStarsStyle } from '../../utils/utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 

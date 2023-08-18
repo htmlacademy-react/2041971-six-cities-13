@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks';
 import CitiesList from '../../components/cities-list/cities-list';
 import WelcomeScreenEmpty from '../../components/welcome-screen-empty/welcome-screen-empty';
 import { Offer } from '../../types/offer';
-import { sorting } from '../../utils';
+import { sorting } from '../../utils/utils';
 import MainDisplay from '../../components/main-display/main-display';
 import { getCity, getSortingType } from '../../store/offers-process/offers-process.selector';
 

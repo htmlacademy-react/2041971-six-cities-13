@@ -1,5 +1,5 @@
-import { SortingType, RATING_KOEF } from './const';
-import { Offer } from './types/offer';
+import { SortingType, RATING_KOEF } from '../const';
+import { Offer } from '../types/offer';
 
 export const sorting = {
   [SortingType.Popular]: (offers: Offer[]) => offers,

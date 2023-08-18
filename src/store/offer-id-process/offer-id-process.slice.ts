@@ -6,6 +6,9 @@ import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction, fet
 const initialState: OfferIdProcess = {
   offer: null,
   isOfferDataLoading: false,
+  isNearbyLoading: false,
+  isCommentsLoading: false,
+  isCommentSending: false,
   nearbyOffers: [],
   comments: [],
   comment: null,
@@ -26,29 +29,29 @@ export const offerIdProcess = createSlice({
         state.isOfferDataLoading = false;
       })
       .addCase(fetchNearbyOffersAction.pending, (state) => {
-        state.isOfferDataLoading = true;
+        state.isNearbyLoading = true;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;
-        state.isOfferDataLoading = false;
+        state.isNearbyLoading = false;
       })
       .addCase(fetchCommentsAction.pending, (state) => {
-        state.isOfferDataLoading = true;
+        state.isCommentsLoading = true;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.comments = action.payload;
-        state.isOfferDataLoading = false;
+        state.isCommentsLoading = false;
       })
       .addCase(fetchSendCommentAction.pending, (state) => {
-        state.isOfferDataLoading = true;
-        state.hasError = true;
+        state.isCommentSending = true;
+        state.hasError = false;
       })
       .addCase(fetchSendCommentAction.fulfilled, (state, action) => {
         state.comment = action.payload;
-        state.isOfferDataLoading = false;
+        state.isCommentSending = false;
       })
       .addCase(fetchSendCommentAction.rejected, (state) => {
-        state.isOfferDataLoading = false;
+        state.isCommentSending = false;
         state.hasError = true;
       }).addCase(fetchChangeStatusFavoriteAction.fulfilled, (state) => {
         state.offer = {...state.offer,
