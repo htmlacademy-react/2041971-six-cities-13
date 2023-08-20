@@ -9,6 +9,7 @@ import ErrorScreen from '../error-screen/error-screen';
 function FavoritesScreen(): JSX.Element {
   const favorites = useAppSelector(getFavorites);
   const hasError = useAppSelector(getErrorStatus);
+
   if (hasError) {
     return <ErrorScreen />;
   }

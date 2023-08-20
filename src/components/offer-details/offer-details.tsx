@@ -21,10 +21,10 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getComments);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const offerImages = images.slice(0,6);
   const isOfferFullCard = true;
   const status = Number(!isFavorite);
-  const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {

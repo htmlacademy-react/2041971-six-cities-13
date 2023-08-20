@@ -24,7 +24,11 @@ const currentCustomIcon = new Icon({
 });
 
 function Map({offers, selectedOffer}: MapProps): JSX.Element {
-  const cityLocation = offers[0]?.city.location;
+  let cityLocation = offers[0]?.city.location;
+
+  if (!offers.length && selectedOffer) {
+    cityLocation = selectedOffer.city.location;
+  }
 
   const {map, mapRef} = useMap({cityLocation});
 

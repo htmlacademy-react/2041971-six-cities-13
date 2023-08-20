@@ -1,15 +1,15 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent } from 'react';
 import { fetchSendCommentAction } from '../../store/api-actions';
-import { getErrorStatus} from '../../store/offer-id-process/offer-id-process.selector';
+import { getCommentSendingErrorStatus} from '../../store/offer-id-process/offer-id-process.selector';
+import ErrorCommentsScreen from '../../pages/error-screen/error-comments-screen';
 
 type CommentFormProps = {
   id: string;
 }
 
 function CommentForm({id}: CommentFormProps): JSX.Element {
-  const hasError = useAppSelector(getErrorStatus);
-
+  const hasError = useAppSelector(getCommentSendingErrorStatus);
   const dispatch = useAppDispatch();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -42,6 +42,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           value="5"
           id="5-stars"
           type="radio"
+          required
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -109,6 +110,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
         maxLength={300}
       >
       </textarea>
+      {hasError && <ErrorCommentsScreen />}
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
                         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
