@@ -11,6 +11,10 @@ import { Comment, Review } from '../types/reviews';
 import { User } from '../types/reviews';
 import { address } from 'faker/locale/en';
 import { UserData } from '../types/user-data';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { createAPI } from '../services/api';
+import { State } from '../types/state';
 
 export const makeFakeUser = (): User => ({
   name: internet.userName(),
@@ -91,3 +95,7 @@ export const makeFakeComment = (): Comment => ({
 });
 
 export const makeFakeReviews = (): Review[] => Array.from({ length: 5 }, makeFakeReview);
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
+
+export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);

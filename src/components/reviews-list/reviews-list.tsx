@@ -1,4 +1,4 @@
-import ReviewCard from '../review/review-card';
+import ReviewCard from '../review-card/review-card';
 import { useAppSelector } from '../../hooks';
 import { getCommentsDataLoadingStatus, getCommentsLoadingErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
 import { Review } from '../../types/reviews';

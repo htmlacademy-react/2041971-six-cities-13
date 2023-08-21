@@ -8,14 +8,21 @@ const DEFAULT_CITY = 'Paris';
 const DEFAULT_SORT = SortingType.Popular;
 
 describe('OffersProcess Slice', () => {
+  const initialState = {
+    city: DEFAULT_CITY,
+    offers: [],
+    sortingType: DEFAULT_SORT,
+    isOffersDataLoading: false,
+    hasError: false,
+  };
+
   it('should return initial state with empty action', () => {
     const emptyAction = { type: '' };
     const expectedState = {
+      ...initialState,
       city: 'Amsterdam',
       offers: fakeOffers,
       sortingType: SortingType.TopRated,
-      isOffersDataLoading: false,
-      hasError: false,
     };
     const result = offersProcess.reducer(expectedState, emptyAction);
     expect(result).toEqual(expectedState);
@@ -23,26 +30,13 @@ describe('OffersProcess Slice', () => {
 
   it('should return default initial state with empty axtion and undefined state', () => {
     const emptyAction = { type: '' };
-    const expectedState = {
-      city: DEFAULT_CITY,
-      offers: [],
-      sortingType: DEFAULT_SORT,
-      isOffersDataLoading: false,
-      hasError: false,
-    };
+    const expectedState = initialState;
     const result = offersProcess.reducer(undefined, emptyAction);
     expect(result).toEqual(expectedState);
   });
 
   it('should change city with "changeCity" action', () => {
     const city = makeFakeCity().name;
-    const initialState = {
-      city: DEFAULT_CITY,
-      offers: [],
-      sortingType: DEFAULT_SORT,
-      isOffersDataLoading: false,
-      hasError: false,
-    };
     const expectedState = {
       ...initialState,
       city,
@@ -52,13 +46,6 @@ describe('OffersProcess Slice', () => {
   });
 
   it('should change sorting type with "changeSortingType" action', () => {
-    const initialState = {
-      city: DEFAULT_CITY,
-      offers: [],
-      sortingType: DEFAULT_SORT,
-      isOffersDataLoading: false,
-      hasError: false,
-    };
     const expectedState = {
       ...initialState,
       sortingType: SortingType.PriceLow,
@@ -69,9 +56,7 @@ describe('OffersProcess Slice', () => {
 
   it('should set "isOffersDataLoading" to "true", "hasError" to "false" with "fetchOffersAction.panding"', () => {
     const expectedState = {
-      city: DEFAULT_CITY,
-      offers: [],
-      sortingType: DEFAULT_SORT,
+      ...initialState,
       isOffersDataLoading: true,
       hasError: false,
     };
@@ -81,11 +66,9 @@ describe('OffersProcess Slice', () => {
 
   it('should set "offers" to array with offers, "isOffersDataLoading" to "false" with "fetchOffersAction.fullfilled"', () => {
     const expectedState = {
-      city: DEFAULT_CITY,
+      ...initialState,
       offers: fakeOffers,
-      sortingType: DEFAULT_SORT,
       isOffersDataLoading: false,
-      hasError: false,
     };
     const result = offersProcess.reducer(undefined, fetchOffersAction.fulfilled(fakeOffers, '', undefined));
     expect(result).toEqual(expectedState);
@@ -93,9 +76,7 @@ describe('OffersProcess Slice', () => {
 
   it('should set "isOffersDataLoading" to "false", "hasError" to "true" with "fetchOffersAction.rejected"', () => {
     const expectedState = {
-      city: DEFAULT_CITY,
-      offers: [],
-      sortingType: DEFAULT_SORT,
+      ...initialState,
       isOffersDataLoading: false,
       hasError: true,
     };

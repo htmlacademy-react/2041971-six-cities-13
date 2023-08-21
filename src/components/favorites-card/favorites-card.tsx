@@ -42,19 +42,6 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
             </span>
           </div>
           <FavoriteButton isFavoriteOffer={isFavorite} onFavoriteClick={handleFavoriteClick} isOfferFullCard={isOfferFullCard} />
-          {/* <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-            >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button> */}
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

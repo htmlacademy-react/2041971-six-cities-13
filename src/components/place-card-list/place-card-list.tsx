@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 
 type PlaceCardListProps = {
     offers: Offer[];
-    onPlaceCardHover: (offer: Offer) => void;
+    onPlaceCardHover: (offer: Offer | undefined) => void;
 }
 
 function PlaceCardList({offers, onPlaceCardHover}: PlaceCardListProps): JSX.Element {

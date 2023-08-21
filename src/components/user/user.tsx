@@ -10,7 +10,7 @@ function User(): JSX.Element {
   const favoritesCount = useAppSelector(getFavoritesCount);
   const userName = getUserEmail();
 
-  const handleFavoritesClick = () => dispatch(fetchFavoritesAction());
+  const handleFavoriteClick = () => dispatch(fetchFavoritesAction());
 
   return (
     <nav className="header__nav">
@@ -18,7 +18,7 @@ function User(): JSX.Element {
         <li className="header__nav-item user">
           <Link className="header__nav-link header__nav-link--profile"
             to={AppRoute.Favorites}
-            onClick={handleFavoritesClick}
+            onClick={handleFavoriteClick}
           >
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
