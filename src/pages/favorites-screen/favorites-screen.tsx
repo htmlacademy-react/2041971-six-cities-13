@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 import FavoritesList from '../../components/favorites-list/favorites-list';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { useAppSelector } from '../../hooks';
-import { getFavorites } from '../../store/favorite-process/favorite-process.selector';
-//import { store } from '../../store';
-//import { fetchFavoritesAction } from '../../store/api-actions';
+import { getErrorStatus, getFavorites } from '../../store/favorite-process/favorite-process.selector';
+import ErrorScreen from '../error-screen/error-screen';
 
 function FavoritesScreen(): JSX.Element {
-  //store.dispatch(fetchFavoritesAction());
   const favorites = useAppSelector(getFavorites);
+  const hasError = useAppSelector(getErrorStatus);
+
+  if (hasError) {
+    return <ErrorScreen />;
+  }
 
   return (
     <div className="page">

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { fetchCommentsAction } from '../../store/api-actions';
-import { getRatingStarsStyle } from '../../utils';
+import { getRatingStarsStyle } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
@@ -21,10 +21,10 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const reviews = useAppSelector(getComments);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const offerImages = images.slice(0,6);
   const isOfferFullCard = true;
   const status = Number(!isFavorite);
-  const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {

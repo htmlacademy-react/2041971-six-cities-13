@@ -6,16 +6,20 @@ import { fetchNearbyOffersAction, fetchOfferByIdAction } from '../../store/api-a
 import { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { useDispatch } from 'react-redux';
-//import LoadingScreen from '../loading-screen/loading-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 import OfferDetails from '../../components/offer-details/offer-details';
-//import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { getOfferById, getNearbyOffers } from '../../store/offer-id-process/offer-id-process.selector';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { getOfferById, getNearbyOffers, getOfferDataLoadingStatus, getOfferErrorStatus, getNearbyErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
+import ErrorCommentsScreen from '../error-screen/error-comments-screen';
 
 function OfferScreen():JSX.Element {
   const {id} = useParams();
   const dispatch = useDispatch();
   const offer = useAppSelector(getOfferById);
+  const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
+  const hasOfferError = useAppSelector(getOfferErrorStatus);
   const neighbourhoods = useAppSelector(getNearbyOffers).slice(0,3);
+  const hasNearbyError = useAppSelector(getNearbyErrorStatus);
 
   useEffect(() => {
     if (id) {
@@ -23,6 +27,18 @@ function OfferScreen():JSX.Element {
       dispatch(fetchNearbyOffersAction(id));
     }
   }, [id, dispatch]);
+
+  if (isOfferDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (hasOfferError) {
+    return (
+      <NotFoundScreen />
+    );
+  }
 
   return (
     <div className="page">
@@ -42,6 +58,7 @@ function OfferScreen():JSX.Element {
               <section className="near-places places">
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
                 <div className="near-places__list places__list">
+                  {hasNearbyError && <ErrorCommentsScreen />}
                   {neighbourhoods.map((neighbourhood) => <PlaceCard key={neighbourhood.id} offer={neighbourhood} />)}
                 </div>
               </section>

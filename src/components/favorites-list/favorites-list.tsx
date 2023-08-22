@@ -5,7 +5,6 @@ type FavoritesListProps = {
     offers: Offer[];
 }
 
-
 function FavoritesList({offers}: FavoritesListProps): JSX.Element {
   const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
 

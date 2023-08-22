@@ -1,11 +1,21 @@
 import { Offer } from '../../types/offer';
+import FavoriteButton from '../favorite-button/favorite-button';
+import { useDispatch } from 'react-redux';
+import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
 
 type FavoritesCardProps = {
   offer: Offer;
 }
 
 function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
-  const {isPremium, previewImage, price, title, type} = offer;
+  const {isPremium, previewImage, price, title, type, isFavorite, id} = offer;
+  const isOfferFullCard = false;
+  const dispatch = useDispatch();
+  const status = Number(!isFavorite);
+
+  const handleFavoriteClick = () => {
+    dispatch(fetchChangeStatusFavoriteAction({status, id}));
+  };
 
   return (
     <article className="favorites__card place-card">
@@ -31,19 +41,7 @@ function FavoritesCard({offer}: FavoritesCardProps): JSX.Element {
                     &#47;&nbsp;night
             </span>
           </div>
-          <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button"
-          >
-            <svg
-              className="place-card__bookmark-icon"
-              width="18"
-              height="19"
-            >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
+          <FavoriteButton isFavoriteOffer={isFavorite} onFavoriteClick={handleFavoriteClick} isOfferFullCard={isOfferFullCard} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
