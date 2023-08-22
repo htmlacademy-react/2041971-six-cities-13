@@ -1,12 +1,5 @@
-import {
-  commerce,
-  datatype,
-  date,
-  image,
-  internet,
-  lorem,
-} from 'faker';
-import { City, Location, Offer, OfferCard} from '../types/offer';
+import { commerce, datatype, date, image, internet, lorem } from 'faker';
+import { City, Location, Offer, OfferCard } from '../types/offer';
 import { Comment, Review } from '../types/reviews';
 import { User } from '../types/reviews';
 import { address } from 'faker/locale/en';
@@ -15,6 +8,7 @@ import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { createAPI } from '../services/api';
 import { State } from '../types/state';
+import { AuthorizationStatus, DEFAULT_CITY, DEFAULT_SORT } from '../const';
 
 export const makeFakeUser = (): User => ({
   name: internet.userName(),
@@ -99,3 +93,20 @@ export const makeFakeReviews = (): Review[] => Array.from({ length: 5 }, makeFak
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  USER: { authorizationStatus: AuthorizationStatus.NoAuth },
+  OFFERS: { city: DEFAULT_CITY, offers: makeFakeOffers(), sortingType: DEFAULT_SORT, isOffersDataLoading: false, hasError: false },
+  OFFER_BY_ID: { offer: null,
+    isOfferDataLoading: false,
+    isCommentsLoading: false,
+    nearbyOffers: [],
+    comments: [],
+    comment: null,
+    hasOfferError: false,
+    hasNearbyError: false,
+    hasCommentsLoadingError: false,
+    hasCommentSendingError: false },
+  FAVORITES: { favorites: makeFakeOffers(), isFavoritesDataLoading: false, hasError: false },
+  ...initialState ?? {},
+});
