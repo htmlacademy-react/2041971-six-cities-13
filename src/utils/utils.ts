@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { SortingType, RATING_KOEF } from '../const';
 import { Offer } from '../types/offer';
 import { Review } from '../types/reviews';
+import { CITIES } from '../const';
 
 export const sorting = {
   [SortingType.Popular]: (offers: Offer[]) => offers,
@@ -16,4 +17,22 @@ export function getRatingStarsStyle(rating: number): string {
 
 export function sortByDate(ratingA: Review, ratingB: Review) {
   return dayjs(ratingB.date).diff(ratingA.date);
+}
+
+export function isPasswordValid(password: string | undefined) {
+  if (
+    !password ||
+    password.length < 2 ||
+    !/\d/.test(password) ||
+    !/\D/i.test(password) ||
+    false
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+export function getRandomCity(cities: typeof CITIES) {
+  return cities[Math.floor(Math.random() * cities.length)];
 }

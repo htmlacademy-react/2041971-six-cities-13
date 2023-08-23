@@ -8,6 +8,7 @@ const initialState: OfferIdProcess = {
   offer: null,
   isOfferDataLoading: false,
   isCommentsLoading: false,
+  isCommentSending: false,
   nearbyOffers: [],
   comments: [],
   comment: null,
@@ -57,19 +58,24 @@ export const offerIdProcess = createSlice({
         state.hasCommentsLoadingError = true;
       })
       .addCase(fetchSendCommentAction.pending, (state) => {
+        state.isCommentSending = true;
         state.hasCommentSendingError = false;
       })
       .addCase(fetchSendCommentAction.fulfilled, (state, action) => {
+        state.isCommentSending = false;
         state.comment = action.payload;
       })
       .addCase(fetchSendCommentAction.rejected, (state) => {
+        state.isCommentSending = false;
         state.hasCommentSendingError = true;
       })
       .addCase(fetchChangeStatusFavoriteAction.fulfilled, (state, action) => {
-        state.offer = {...state.offer,
-          isFavorite: !state.offer?.isFavorite
-        };
-        state.nearbyOffers = state.nearbyOffers.reduce((acc, offer) => {
+        if (state.offer) {
+          state.offer = {...state.offer,
+            isFavorite: !state.offer.isFavorite
+          };
+        }
+        state.nearbyOffers = state.nearbyOffers.reduce<Offer[]>((acc, offer) => {
           if (offer.id === action.payload.id) {
             return [...acc, {...offer,
               isFavorite: !offer.isFavorite}];

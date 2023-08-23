@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { FormEvent } from 'react';
 import { fetchSendCommentAction } from '../../store/api-actions';
-import { getCommentSendingErrorStatus} from '../../store/offer-id-process/offer-id-process.selector';
+import { getCommentDataSendingStatus, getCommentSendingErrorStatus} from '../../store/offer-id-process/offer-id-process.selector';
 import ErrorCommentsScreen from '../../pages/error-screen/error-comments-screen';
 
 type CommentFormProps = {
@@ -10,6 +10,8 @@ type CommentFormProps = {
 
 function CommentForm({id}: CommentFormProps): JSX.Element {
   const hasError = useAppSelector(getCommentSendingErrorStatus);
+  const isCommentSending = useAppSelector(getCommentDataSendingStatus);
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -43,6 +45,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           id="5-stars"
           type="radio"
           required
+          disabled={isCommentSending}
         />
         <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
           <svg className="form__star-image" width="37" height="33">
@@ -56,6 +59,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           value="4"
           id="4-stars"
           type="radio"
+          disabled={isCommentSending}
         />
         <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
           <svg className="form__star-image" width="37" height="33">
@@ -69,6 +73,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           value="3"
           id="3-stars"
           type="radio"
+          disabled={isCommentSending}
         />
         <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
           <svg className="form__star-image" width="37" height="33">
@@ -82,6 +87,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           value="2"
           id="2-stars"
           type="radio"
+          disabled={isCommentSending}
         />
         <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
           <svg className="form__star-image" width={37} height={33}>
@@ -95,6 +101,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           value="1"
           id="1-star"
           type="radio"
+          disabled={isCommentSending}
         />
         <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width={37} height={33}>
@@ -108,6 +115,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         minLength={50}
         maxLength={300}
+        disabled={isCommentSending}
       >
       </textarea>
       {hasError && <ErrorCommentsScreen />}
@@ -115,7 +123,12 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
         <p className="reviews__help">
                         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button
+          className="reviews__submit form__submit button"
+          type="submit"
+          disabled={isCommentSending}
+        >Submit
+        </button>
       </div>
     </form>
   );
