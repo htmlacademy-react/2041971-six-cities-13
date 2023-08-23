@@ -13,7 +13,7 @@ type MainDisplayProps = {
 function MainDisplay({offers, city, currentOffers}: MainDisplayProps): JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
 
-  const handlePlaceCardHover = (point: Offer) => {
+  const handlePlaceCardHover = (point: Offer | undefined) => {
     if (point) {
       const currentPoint = offers.find((offer) => offer.id === point.id);
       setSelectedOffer(currentPoint);

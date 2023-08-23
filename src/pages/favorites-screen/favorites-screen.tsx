@@ -15,7 +15,7 @@ function FavoritesScreen(): JSX.Element {
   }
 
   return (
-    <div className="page">
+    <div className="page" data-testid="favorites-container">
       <Helmet>
         <title>Шесть городов. Выбранные места</title>
       </Helmet>

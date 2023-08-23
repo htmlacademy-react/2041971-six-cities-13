@@ -1,16 +1,21 @@
 import { Helmet } from 'react-helmet-async';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import Logo from '../../components/logo/logo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AuthorizationStatus, AppRoute } from '../../const';
-import { Navigate } from 'react-router-dom';
+import { AuthorizationStatus, AppRoute, CITIES } from '../../const';
+import { Navigate, Link } from 'react-router-dom';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { isPasswordValid, getRandomCity } from '../../utils/utils';
+import ErrorPasswordScreen from '../error-screen/error-password-screen';
+import { changeCity } from '../../store/offers-process/offers-process.slice';
 
 function LoginScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
+  const [isValid, setIsValid] = useState(true);
+  const randomCity = getRandomCity(CITIES);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;
@@ -22,8 +27,9 @@ function LoginScreen(): JSX.Element {
     const form = evt.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData) as AuthData;
+    setIsValid(isPasswordValid(data.password));
 
-    if (data !== null) {
+    if (data !== null && isPasswordValid(data.password)) {
       dispatch(loginAction(data));
     }
   };
@@ -71,6 +77,7 @@ function LoginScreen(): JSX.Element {
                   required
                 />
               </div>
+              {!isValid && <ErrorPasswordScreen />}
               <button
                 className="login__submit form__submit button"
                 type="submit"
@@ -80,9 +87,13 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={() => dispatch(changeCity(randomCity))}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>

@@ -3,9 +3,8 @@ import { NameSpace, SortingType } from '../../const';
 import { OffersProcess } from '../../types/state';
 import { fetchChangeStatusFavoriteAction, fetchOffersAction } from '../api-actions';
 import { Offer } from '../../types/offer';
+import { DEFAULT_CITY, DEFAULT_SORT } from '../../const';
 
-const DEFAULT_CITY = 'Paris';
-const DEFAULT_SORT = SortingType.Popular;
 
 const initialState: OffersProcess = {
   city: DEFAULT_CITY,

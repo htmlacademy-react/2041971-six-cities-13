@@ -15,6 +15,7 @@ describe('OfferIdProcess Slice', () => {
     offer: null,
     isOfferDataLoading: false,
     isCommentsLoading: false,
+    isCommentSending: false,
     nearbyOffers: [],
     comments: [],
     comment: null,
@@ -73,9 +74,10 @@ describe('OfferIdProcess Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "hasCommentSendingError" to "false" with "fetchSendCommentAction.panding"', () => {
+  it('should set "isCommentSending" to "true", "hasCommentSendingError" to "false" with "fetchSendCommentAction.panding"', () => {
     const expectedState = {
       ...initialState,
+      isCommentSending: true,
       hasCommentSendingError: false,
     };
     const result = offerIdProcess.reducer(undefined, fetchSendCommentAction.pending);
@@ -111,10 +113,11 @@ describe('OfferIdProcess Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "comment" to object of comment with "fetchSendCommentAction.fullfilled"', () => {
+  it('should set "isCommentSending" to "false", "comment" to object of comment with "fetchSendCommentAction.fullfilled"', () => {
     const expectedState = {
       ...initialState,
       comment: fakeComment,
+      isCommentSending: false,
     };
     const result = offerIdProcess.reducer(undefined, fetchSendCommentAction.fulfilled(fakeComment, '', {rating: fakeComment.ratingData, comment: fakeComment.comment, id: fakeOffer.id}));
     expect(result).toEqual(expectedState);
@@ -149,10 +152,11 @@ describe('OfferIdProcess Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "hasCommentSendingError" to "true" with "fetchSendCommentAction.rejected"', () => {
+  it('should set "isCommentSending" to "false", "hasCommentSendingError" to "true" with "fetchSendCommentAction.rejected"', () => {
     const expectedState = {
       ...initialState,
       hasCommentSendingError: true,
+      isCommentSending: false,
     };
     const result = offerIdProcess.reducer(undefined, fetchSendCommentAction.rejected);
     expect(result).toEqual(expectedState);

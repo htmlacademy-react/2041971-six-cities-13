@@ -46,6 +46,8 @@ export enum RequestStatus {
 }
 
 export const RATING_KOEF = 20;
+export const DEFAULT_CITY = 'Paris';
+export const DEFAULT_SORT = SortingType.Popular;
 
 export enum NameSpace {
   Favorites = 'FAVORITES',

@@ -6,6 +6,7 @@ import { State } from '../../types/state';
 export const getOfferById = (state: State): OfferCard | null => state[NameSpace.OfferById].offer;
 export const getOfferDataLoadingStatus = (state: State): boolean => state[NameSpace.OfferById].isOfferDataLoading;
 export const getCommentsDataLoadingStatus = (state: State): boolean => state[NameSpace.OfferById].isCommentsLoading;
+export const getCommentDataSendingStatus = (state: State): boolean => state[NameSpace.OfferById].isCommentSending;
 export const getNearbyOffers = (state: State): Offer[] => state[NameSpace.OfferById].nearbyOffers;
 export const getComments = (state: State): Review[] => state[NameSpace.OfferById].comments;
 export const getOfferErrorStatus = (state: State): boolean => state[NameSpace.OfferById].hasOfferError;
