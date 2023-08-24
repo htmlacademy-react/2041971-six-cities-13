@@ -1,6 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/user-process.selector';
+import { getOffers, getOffersDataLoadingStatus, getErrorStatus } from '../../store/offers-process/offers-process.selector';
 import Layout from '../layout/layout';
 import WelcomeScreen from '../../pages/welcome-screen/welcome-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
@@ -8,10 +11,7 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-rout';
-import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/user-process.selector';
-import { getOffers, getOffersDataLoadingStatus, getErrorStatus } from '../../store/offers-process/offers-process.selector';
 import ErrorScreen from '../../pages/error-screen/error-screen';
 
 function App(): JSX.Element {

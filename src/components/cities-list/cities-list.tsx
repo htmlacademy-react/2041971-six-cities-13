@@ -1,20 +1,19 @@
+import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/offers-process/offers-process.slice';
-import classNames from 'classnames';
 import { getCity } from '../../store/offers-process/offers-process.selector';
 import { CITIES } from '../../const';
 
 function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
+  const activeCity = useAppSelector(getCity);
 
   const handleCityCheck = (city: string) => {
     dispatch(changeCity(city));
   };
 
-  const activeCity = useAppSelector(getCity);
-
   return(
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid="cities-list">
       {CITIES.map((city) => (
         <li
           key={city}
@@ -31,6 +30,7 @@ function CitiesList(): JSX.Element {
               evt.preventDefault();
               handleCityCheck(city);
             }}
+            data-testid="cities-item"
           >
             <span>{city}</span>
           </a>

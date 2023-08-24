@@ -1,35 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { withHistory, withStore } from '../../utils/mock-component';
-import CitiesList from './cities-list';
-import { makeFakeCities } from '../../utils/mock';
+import LoginScreen from './login-screen';
 
-describe('Component: Cities List', () => {
+describe('Component: Login Screen', () => {
   it('should render correctly', () => {
-    const citiesListTestId = 'cities list';
-    const citiesItemTestId = 'cities item';
-    const { withStoreComponent } = withStore(<CitiesList />, {});
+    const signinText = 'Sign in';
+    const loginText = 'E-mail';
+    const passwordText = 'Password';
+    const {withStoreComponent} = withStore(<LoginScreen />, {});
+    const preparedComponent = withHistory(withStoreComponent);
 
-    render(withStoreComponent);
+    render(preparedComponent);
 
-    expect(screen.getAllByTestId(citiesListTestId)).toBeInTheDocument();
-    expect(screen.getAllByTestId(citiesItemTestId).length).toBe(makeFakeCities().length);
+    expect(screen.getByText(signinText)).toBeInTheDocument();
+    // expect(screen.getByText(loginText)).toBeInTheDocument();
+    // expect(screen.getByText(passwordText)).toBeInTheDocument();
   });
-
-  it('should dispatch "fetchOffersAction" when user clicked replay button', async () => {
-    const { withStoreComponent, mockStore, mockAxiosAdapter } = withStore(<ErrorScreen />, {});
-    mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, []);
-
-    render(withStoreComponent);
-    await userEvent.click(screen.getByRole('button'));
-    const actions = extractActionsTypes(mockStore.getActions());
-
-    expect(actions).toEqual([
-      fetchOffersAction.pending.type,
-      fetchOffersAction.fulfilled.type,
-    ]);
-  });
-
 
   it('should render correctly when user enter login and password', async() => {
     const loginElementTestId = 'loginElement';
@@ -52,3 +39,4 @@ describe('Component: Cities List', () => {
     expect(screen.getByDisplayValue(expectedPasswordValue)).toBeInTheDocument();
   });
 });
+

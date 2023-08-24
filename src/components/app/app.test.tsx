@@ -57,15 +57,18 @@ describe('Application Routing', () => {
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
 
-  //   it('should render "OfferScreen" when user navigate to /offer/id', () => {
-  //     const withHistoryComponent = withHistory(<App />, mockHistory);
-  //     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-  //     const id = 'hfuhfru';
-  //     mockHistory.push(AppRoute.Offer, {id});
+  it('should render "OfferScreen" when user navigate to /offer/id', () => {
+    const store = makeFakeStore();
+    const withHistoryComponent = withHistory(<App />, mockHistory);
+    const { withStoreComponent } = withStore(withHistoryComponent, store);
+    const id = store.OFFER_BY_ID.offer?.id;
 
-  //     render(withStoreComponent);
+    if (id) {
+      mockHistory.push(`${AppRoute.Offer}:${id}`);
+    }
 
-  //     expect(screen.getByText(/What's inside/i)).toBeInTheDocument();
-  //     expect(screen.getByText(/Meet the host/i)).toBeInTheDocument();
-  //   });
+    render(withStoreComponent);
+
+    expect(screen.getByTestId('offer-container')).toBeInTheDocument();
+  });
 });

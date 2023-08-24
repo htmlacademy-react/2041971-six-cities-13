@@ -41,7 +41,7 @@ function OfferScreen():JSX.Element {
   }
 
   return (
-    <div className="page">
+    <div className="page" data-testid="offer-container">
       {offer && (
         <>
           <Helmet>
