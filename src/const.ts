@@ -55,3 +55,6 @@ export enum NameSpace {
   Offers = 'OFFERS',
   User = 'USER',
 }
+
+export const EMPTY_OFFERS = [];
+export const EMPTY_FAVORITES = [];

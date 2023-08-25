@@ -63,6 +63,8 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
           lat: offer.location.latitude,
           lng: offer.location.longitude,
         });
+
+
         marker
           .setIcon(selectedOffer !== undefined && offer.id === selectedOffer.id
             ? currentCustomIcon

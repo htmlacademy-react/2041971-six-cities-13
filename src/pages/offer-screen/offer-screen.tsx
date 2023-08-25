@@ -59,7 +59,7 @@ function OfferScreen():JSX.Element {
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
                 <div className="near-places__list places__list">
                   {hasNearbyError && <ErrorCommentsScreen />}
-                  {neighbourhoods.map((neighbourhood) => <PlaceCard key={neighbourhood.id} offer={neighbourhood} />)}
+                  {neighbourhoods.map((neighbourhood) => <PlaceCard key={neighbourhood.id} offer={neighbourhood} isNearbyCard />)}
                 </div>
               </section>
             </div>

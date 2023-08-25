@@ -3,16 +3,17 @@ import { Offer } from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
-import { getRatingStarsStyle } from '../../utils/utils';
+import { getRatingStarsStyle, getType } from '../../utils/utils';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 
 type PlaceCardProps = {
   offer: Offer;
   onCardHover?: (offer?: Offer) => void;
+  isNearbyCard?: boolean;
 }
 
-function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer, onCardHover, isNearbyCard}: PlaceCardProps): JSX.Element {
   const {isPremium, previewImage, price, title, type, id, isFavorite, rating} = offer;
   const dispatch = useAppDispatch();
   const status = Number(!isFavorite);
@@ -34,7 +35,7 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
   };
 
   return (
-    <article className="cities__card place-card"
+    <article className={`${isNearbyCard ? 'near-places' : 'cities'}__card place-card`}
       id={id}
       onMouseEnter={() => handlerCardHover(offer)}
       onMouseLeave={() => handlerCardHover()}
@@ -68,7 +69,7 @@ function PlaceCard({offer, onCardHover}: PlaceCardProps): JSX.Element {
         <h2 className="place-card__name" >
           <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{getType(type)}</p>
       </div>
     </article>
   );
