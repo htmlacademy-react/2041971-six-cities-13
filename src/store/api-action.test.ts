@@ -3,14 +3,13 @@ import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { Action } from 'redux';
-import { AppThunkDispatch, extractActionsTypes, makeFakeComment, makeFakeFullOffer, makeFakeOffer, makeFakeOffers, makeFakeReviews } from '../utils/mock';
+import { AppThunkDispatch, extractActionsTypes, makeFakeComment, makeFakeFullOffer, makeFakeOffers, makeFakeReviews } from '../utils/mock';
 import { APIRoute } from '../const';
 import { State } from '../types/state';
 import { checkAuthAction, fetchChangeStatusFavoriteAction, fetchCommentsAction, fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferByIdAction, fetchOffersAction, fetchSendCommentAction, loginAction, logoutAction } from './api-actions';
 import { redirectToRoute } from './action';
 import { AuthData } from '../types/auth-data';
 import * as tokenStorage from '../services/token';
-
 
 describe('Async actions', () => {
   const axios = createAPI();
@@ -46,18 +45,18 @@ describe('Async actions', () => {
   });
 
   describe('fetchOffersAction', () => {
-    it('should dispatch "fetchOffersAction.pending", "fetchOffersAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchOffersAction.pending", "fetchOffersAction.fulfilled", when server response 200', async () => {
       const mockOffers = makeFakeOffers();
       mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, mockOffers);
       await store.dispatch(fetchOffersAction());
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchOffersActionFulfield = emittedActions.at(1) as ReturnType<typeof fetchOffersAction.fulfield>;
+      const fetchOffersActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchOffersAction.fulfilled>;
       expect(extractedActionsTypes).toEqual([
         fetchOffersAction.pending.type,
         fetchOffersAction.fulfilled.type,
       ]);
-      expect(fetchOffersActionFulfield.payload).toEqual(mockOffers);
+      expect(fetchOffersActionFulfilled.payload).toEqual(mockOffers);
     });
 
     it('should dispatch "fetchOffersAction.pending", "fetchOffersAction.rejected", when server response 400', async () => {
@@ -72,18 +71,18 @@ describe('Async actions', () => {
   });
 
   describe('fetchFavoritesAction', () => {
-    it('should dispatch "fetchFavoritesAction.pending", "fetchFavoritesAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchFavoritesAction.pending", "fetchFavoritesAction.fulfilled", when server response 200', async () => {
       const mockFavorites = makeFakeOffers();
       mockAxiosAdapter.onGet(APIRoute.Favorite).reply(200, mockFavorites);
       await store.dispatch(fetchFavoritesAction());
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchFavoritesActionFulfield = emittedActions.at(1) as ReturnType<typeof fetchFavoritesAction.fulfield>;
+      const fetchFavoritesActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchFavoritesAction.fulfilled>;
       expect(extractedActionsTypes).toEqual([
         fetchFavoritesAction.pending.type,
         fetchFavoritesAction.fulfilled.type,
       ]);
-      expect(fetchFavoritesActionFulfield.payload).toEqual(mockFavorites);
+      expect(fetchFavoritesActionFulfilled.payload).toEqual(mockFavorites);
     });
 
     it('should dispatch "fetchFavoritesAction.pending", "fetchFavoritesAction.rejected", when server response 400', async () => {
@@ -151,19 +150,19 @@ describe('Async actions', () => {
   });
 
   describe('fetchOfferByIdAction', () => {
-    it('should dispatch "fetchOfferByIdAction.pending", "fetchOfferByIdAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchOfferByIdAction.pending", "fetchOfferByIdAction.fulfilled", when server response 200', async () => {
       const mockOfferById = makeFakeFullOffer();
       const offerId = 'eahvfie';
       mockAxiosAdapter.onGet(`${APIRoute.Offers}/${offerId}`).reply(200, mockOfferById);
       await store.dispatch(fetchOfferByIdAction(offerId));
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchOfferByIdActionFulfield = emittedActions.at(1) as ReturnType<typeof fetchOfferByIdAction.fulfield>;
+      const fetchOfferByIdActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchOfferByIdAction.fulfilled>;
       expect(extractedActionsTypes).toEqual([
         fetchOfferByIdAction.pending.type,
         fetchOfferByIdAction.fulfilled.type,
       ]);
-      expect(fetchOfferByIdActionFulfield.payload).toEqual(mockOfferById);
+      expect(fetchOfferByIdActionFulfilled.payload).toEqual(mockOfferById);
     });
 
     it('should dispatch "fetchOfferByIdAction.pending", "fetchOfferByIdAction.rejected", when server response 400', async () => {
@@ -179,19 +178,19 @@ describe('Async actions', () => {
   });
 
   describe('fetchCommentsAction', () => {
-    it('should dispatch "fetchCommentsAction.pending", "fetchCommentsAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchCommentsAction.pending", "fetchCommentsAction.fulfilled", when server response 200', async () => {
       const mockComments = makeFakeReviews();
       const offerId = 'eahvfie';
       mockAxiosAdapter.onGet(`${APIRoute.Comments}/${offerId}`).reply(200, mockComments);
       await store.dispatch(fetchCommentsAction(offerId));
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchCommentsActionFulfield = emittedActions.at(1) as ReturnType<typeof fetchCommentsAction.fulfield>;
+      const fetchCommentsActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchCommentsAction.fulfilled>;
       expect(extractedActionsTypes).toEqual([
         fetchCommentsAction.pending.type,
         fetchCommentsAction.fulfilled.type,
       ]);
-      expect(fetchCommentsActionFulfield.payload).toEqual(mockComments);
+      expect(fetchCommentsActionFulfilled.payload).toEqual(mockComments);
     });
 
     it('should dispatch "fetchCommentsAction.pending", "fetchCommentsAction.rejected", when server response 400', async () => {
@@ -207,19 +206,19 @@ describe('Async actions', () => {
   });
 
   describe('fetchNearbyOffersAction', () => {
-    it('should dispatch "fetchNearbyOffersAction.pending", "fetchNearbyOffersAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchNearbyOffersAction.pending", "fetchNearbyOffersAction.fulfilled", when server response 200', async () => {
       const mockNearby = makeFakeOffers();
       const offerId = 'eahvfie';
       mockAxiosAdapter.onGet(`${APIRoute.Offers}/${offerId}${APIRoute.OffersNearBy}`).reply(200, mockNearby);
       await store.dispatch(fetchNearbyOffersAction(offerId));
       const emittedActions = store.getActions();
       const extractedActionsTypes = extractActionsTypes(emittedActions);
-      const fetchNearbyOffersActionFulfield = emittedActions.at(1) as ReturnType<typeof fetchNearbyOffersAction.fulfield>;
+      const fetchNearbyOffersActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchNearbyOffersAction.fulfilled>;
       expect(extractedActionsTypes).toEqual([
         fetchNearbyOffersAction.pending.type,
         fetchNearbyOffersAction.fulfilled.type,
       ]);
-      expect(fetchNearbyOffersActionFulfield.payload).toEqual(mockNearby);
+      expect(fetchNearbyOffersActionFulfilled.payload).toEqual(mockNearby);
     });
 
     it('should dispatch "fetchNearbyOffersAction.pending", "fetchNearbyOffersAction.rejected", when server response 400', async () => {
@@ -235,7 +234,7 @@ describe('Async actions', () => {
   });
 
   describe('fetchSendCommentAction', () => {
-    it('should dispatch "fetchSendCommentAction.pending", "fetchSendCommentAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchSendCommentAction.pending", "fetchSendCommentAction.fulfilled", when server response 200', async () => {
       const mockComment = makeFakeComment();
       const offerId = 'eahvfie';
       mockAxiosAdapter.onPost(`${APIRoute.Comments}/${offerId}`).reply(200);
@@ -262,7 +261,7 @@ describe('Async actions', () => {
   });
 
   describe('fetchChangeStatusFavoriteAction', () => {
-    it('should dispatch "fetchChangeStatusFavoriteAction.pending", "fetchChangeStatusFavoriteAction.fulfield", when server response 200', async () => {
+    it('should dispatch "fetchChangeStatusFavoriteAction.pending", "fetchChangeStatusFavoriteAction.fulfilled", when server response 200', async () => {
       const offerId = 'eahvfie';
       const status = 0;
       mockAxiosAdapter.onPost(`${APIRoute.Favorite}/${offerId}/${status}`).reply(200);

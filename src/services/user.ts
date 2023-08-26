@@ -1,4 +1,4 @@
-const USER_EMAIL_KEY_NAME = 'Email';
+import { USER_EMAIL_KEY_NAME } from '../const';
 
 export const getUserEmail = (): string => {
   const userEmail = localStorage.getItem(USER_EMAIL_KEY_NAME);

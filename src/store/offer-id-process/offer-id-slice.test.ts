@@ -1,8 +1,6 @@
 import { offerIdProcess } from './offer-id-process.slice';
 import { makeFakeComment, makeFakeFullOffer, makeFakeOffer, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
-import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction, fetchSendCommentAction,
-  //fetchChangeStatusFavoriteAction
-} from '../api-actions';
+import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction, fetchSendCommentAction } from '../api-actions';
 
 const fakeOffer = makeFakeOffer();
 const fakeFullOffer = makeFakeFullOffer();
@@ -161,19 +159,4 @@ describe('OfferIdProcess Slice', () => {
     const result = offerIdProcess.reducer(undefined, fetchSendCommentAction.rejected);
     expect(result).toEqual(expectedState);
   });
-
-  // it('should set "offer" to object of offer "nearbyOffers" to array of offer,  with "fetchChangeStatusFavoriteAction.fulfilled"', () => {
-  //   const expectedState = {
-  //     ...initialState,
-  //     offer: {
-  //       ...fakeFullOffer,
-  //       isFavorite: !fakeOffer.isFavorite,
-  //     },
-  //     nearbyOffers: {
-  //       ...fakeNearby,
-  //     }
-  //   };
-  //   const result = offerIdProcess.reducer(undefined, fetchChangeStatusFavoriteAction.fulfilled(fakeOffer, '',{status: Number(!fakeOffer.isFavorite), id: fakeOffer.id}));
-  //   expect(result).toEqual(expectedState);
-  // });
 });

@@ -60,7 +60,7 @@ describe('Application Routing', () => {
   it('should render "OfferScreen" when user navigate to /offer/id', () => {
     const store = makeFakeStore();
     const withHistoryComponent = withHistory(<App />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, store);
+    const {withStoreComponent} = withStore(withHistoryComponent, store);
     const id = store.OFFER_BY_ID.offer?.id;
 
     if (id) {
