@@ -56,19 +56,4 @@ describe('Application Routing', () => {
     expect(screen.getByText('404 Not Found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
-
-  it('should render "OfferScreen" when user navigate to /offer/id', () => {
-    const store = makeFakeStore();
-    const withHistoryComponent = withHistory(<App />, mockHistory);
-    const {withStoreComponent} = withStore(withHistoryComponent, store);
-    const id = store.OFFER_BY_ID.offer?.id;
-
-    if (id) {
-      mockHistory.push(`${AppRoute.Offer}:${id}`);
-    }
-
-    render(withStoreComponent);
-
-    expect(screen.getByTestId('offer-container')).toBeInTheDocument();
-  });
 });

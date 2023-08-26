@@ -13,7 +13,7 @@ function CitiesList(): JSX.Element {
   };
 
   return(
-    <ul className="locations__list tabs__list" data-testid="cities-list">
+    <ul className="locations__list tabs__list">
       {CITIES.map((city) => (
         <li
           key={city}
@@ -30,7 +30,6 @@ function CitiesList(): JSX.Element {
               evt.preventDefault();
               handleCityCheck(city);
             }}
-            data-testid="cities-item"
           >
             <span>{city}</span>
           </a>
