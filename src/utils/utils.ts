@@ -36,3 +36,11 @@ export function isPasswordValid(password: string | undefined) {
 export function getRandomCity(cities: typeof CITIES) {
   return cities[Math.floor(Math.random() * cities.length)];
 }
+
+export function getType(type: string) {
+  return type.charAt(0).toUpperCase() + type.slice(1);
+}
+
+export function isReviewFormValid(ratingData: number, comment: FormDataEntryValue) {
+  return ratingData > 0 && comment.length < 301 && comment.length > 49;
+}

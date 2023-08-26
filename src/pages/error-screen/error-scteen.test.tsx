@@ -1,13 +1,33 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ErrorScreen from './error-screen';
-import { withHistory } from '../../utils/mock-component';
+import { withStore } from '../../utils/mock-component';
+import { fetchOffersAction } from '../../store/api-actions';
+import { extractActionsTypes } from '../../utils/mock';
+import { APIRoute } from '../../const';
 
-describe('Component: Error Screen', () => {
-  it('should render correct', () => {
-    const preparedComponent = withHistory(<ErrorScreen />);
+describe('Component: ErrorScreen', () => {
+  it('should render correctly', () => {
+    const firstExpectedText = 'Не удалось загрузить';
+    const { withStoreComponent } = withStore(<ErrorScreen />, {});
 
-    render(preparedComponent);
-    expect(screen.getByText(/Не удалось загрузить/i)).toBeInTheDocument();
-    expect(screen.getByText(/Попробовать ещё раз/i)).toBeInTheDocument();
+    render(withStoreComponent);
+
+    expect(screen.getByText(firstExpectedText)).toBeInTheDocument();
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+
+  it('should dispatch "fetchOffersAction" when user clicked replay button', async () => {
+    const { withStoreComponent, mockStore, mockAxiosAdapter } = withStore(<ErrorScreen />, {});
+    mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, []);
+
+    render(withStoreComponent);
+    await userEvent.click(screen.getByRole('button'));
+    const actions = extractActionsTypes(mockStore.getActions());
+
+    expect(actions).toEqual([
+      fetchOffersAction.pending.type,
+      fetchOffersAction.fulfilled.type,
+    ]);
   });
 });

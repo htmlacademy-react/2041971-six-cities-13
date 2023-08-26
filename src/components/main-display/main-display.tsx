@@ -27,7 +27,7 @@ function MainDisplay({offers, city, currentOffers}: MainDisplayProps): JSX.Eleme
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{currentOffers.length} places to stay in {city}</b>
+          <b className="places__found">{currentOffers.length} place{currentOffers.length !== 1 ? 's' : ''} to stay in {city}</b>
           <Sorting />
           <PlaceCardList offers={currentOffers} onPlaceCardHover={handlePlaceCardHover}/>
         </section>

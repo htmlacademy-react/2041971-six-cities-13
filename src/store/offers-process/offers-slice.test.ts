@@ -83,16 +83,4 @@ describe('OffersProcess Slice', () => {
     const result = offersProcess.reducer(undefined, fetchOffersAction.rejected);
     expect(result).toEqual(expectedState);
   });
-
-//   it('should change favorite status "fetchChangeStatusFavoriteAction.fulfilled"', () => {
-//     const expectedState = {
-//       city: DEFAULT_CITY,
-//       offers: fakeOffers,
-//       sortingType: DEFAULT_SORT,
-//       isOffersDataLoading: false,
-//       hasError: false,
-//     };
-//     const result = offersProcess.reducer(undefined, fetchChangeStatusFavoriteAction.fulfilled(fakeOffers[0], '', {status: 1, id: fakeOffer.id}));
-//     expect(result).toEqual(expectedState);
-//   });
 });

@@ -90,6 +90,10 @@ export const makeFakeComment = (): Comment => ({
 
 export const makeFakeReviews = (): Review[] => Array.from({ length: 5 }, makeFakeReview);
 
+export const makeFakeCitie = (): string => address.cityName();
+
+export const makeFakeCities = (): string[] => Array.from({ length: 6 }, makeFakeCitie);
+
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
 
 export const extractActionsTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
@@ -100,6 +104,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
   OFFER_BY_ID: { offer: null,
     isOfferDataLoading: false,
     isCommentsLoading: false,
+    isCommentSending: false,
     nearbyOffers: [],
     comments: [],
     comment: null,

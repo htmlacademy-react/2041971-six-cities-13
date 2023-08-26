@@ -1,20 +1,19 @@
 import { Helmet } from 'react-helmet-async';
-import PlaceCard from '../../components/place-card/place-card';
-import Map from '../../components/map/map';
+import { getOfferById, getNearbyOffers, getOfferDataLoadingStatus, getOfferErrorStatus, getNearbyErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
 import { useParams } from 'react-router-dom';
 import { fetchNearbyOffersAction, fetchOfferByIdAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { useAppSelector } from '../../hooks';
-import { useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 import OfferDetails from '../../components/offer-details/offer-details';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { getOfferById, getNearbyOffers, getOfferDataLoadingStatus, getOfferErrorStatus, getNearbyErrorStatus } from '../../store/offer-id-process/offer-id-process.selector';
+import PlaceCard from '../../components/place-card/place-card';
+import Map from '../../components/map/map';
 import ErrorCommentsScreen from '../error-screen/error-comments-screen';
 
 function OfferScreen():JSX.Element {
   const {id} = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const offer = useAppSelector(getOfferById);
   const isOfferDataLoading = useAppSelector(getOfferDataLoadingStatus);
   const hasOfferError = useAppSelector(getOfferErrorStatus);
@@ -41,7 +40,7 @@ function OfferScreen():JSX.Element {
   }
 
   return (
-    <div className="page">
+    <div className="page" data-testid="offer-container">
       {offer && (
         <>
           <Helmet>
@@ -59,7 +58,7 @@ function OfferScreen():JSX.Element {
                 <h2 className="near-places__title">Other places in the neighbourhood</h2>
                 <div className="near-places__list places__list">
                   {hasNearbyError && <ErrorCommentsScreen />}
-                  {neighbourhoods.map((neighbourhood) => <PlaceCard key={neighbourhood.id} offer={neighbourhood} />)}
+                  {neighbourhoods.map((neighbourhood) => <PlaceCard key={neighbourhood.id} offer={neighbourhood} isNearbyCard />)}
                 </div>
               </section>
             </div>

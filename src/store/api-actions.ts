@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { Offer, OfferCard } from '../types/offer';
-import { APIRoute, AppRoute } from '../const';
+import { APIRoute, AppRoute, EMPTY_OFFERS, EMPTY_FAVORITES } from '../const';
 import { redirectToRoute } from './action';
 import { dropToken, saveToken } from '../services/token';
 import { dropUserEmail, saveUserEmail } from '../services/user';
@@ -17,8 +17,12 @@ export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   }>(
     'fetchOffers',
     async (_arg, {extra: api}) => {
-      const {data} = await api.get<Offer[]>(APIRoute.Offers);
-      return data;
+      try {
+        const {data} = await api.get<Offer[]>(APIRoute.Offers);
+        return data;
+      } catch {
+        return EMPTY_OFFERS;
+      }
     },
   );
 
@@ -78,8 +82,12 @@ export const fetchFavoritesAction = createAsyncThunk<Offer[], undefined, {
   }>(
     'fetchFavorites',
     async (_arg, {extra: api}) => {
-      const {data} = await api.get<Offer[]>(APIRoute.Favorite);
-      return data;
+      try {
+        const {data} = await api.get<Offer[]>(APIRoute.Favorite);
+        return data;
+      } catch {
+        return EMPTY_FAVORITES;
+      }
     },
   );
 

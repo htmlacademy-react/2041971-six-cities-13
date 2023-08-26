@@ -6,11 +6,12 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import { useEffect } from 'react';
 import { fetchCommentsAction } from '../../store/api-actions';
-import { getRatingStarsStyle } from '../../utils/utils';
+import { getRatingStarsStyle, getType } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
 import { fetchChangeStatusFavoriteAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { getComments } from '../../store/offer-id-process/offer-id-process.selector';
+import classNames from 'classnames';
 
 type OfferDetailsProps = {
     offer: OfferCard;
@@ -69,9 +70,9 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
             <span className="offer__rating-value rating__value">{rating}</span>
           </div>
           <ul className="offer__features">
-            <li className="offer__feature offer__feature--entire">{type}</li>
-            <li className="offer__feature offer__feature--bedrooms">{bedrooms} Bedrooms</li>
-            <li className="offer__feature offer__feature--adults">Max {maxAdults} adults</li>
+            <li className="offer__feature offer__feature--entire">{getType(type)}</li>
+            <li className="offer__feature offer__feature--bedrooms">{bedrooms} Bedroom{bedrooms > 1 && 's'}</li>
+            <li className="offer__feature offer__feature--adults">Max {maxAdults} adult{maxAdults > 1 && 's'}</li>
           </ul>
           <div className="offer__price">
             <b className="offer__price-value">&euro;{price}</b>
@@ -86,14 +87,17 @@ function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
           <div className="offer__host">
             <h2 className="offer__host-title">Meet the host</h2>
             <div className="offer__host-user user">
-              <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+              <div className={classNames('offer__avatar-wrapper  user__avatar-wrapper' ,{
+                'offer__avatar-wrapper--pro' : host.isPro
+              })}
+              >
                 <img className="offer__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
               </div>
               <span className="offer__user-name">{host.name}</span>
               {host.isPro && <span className="offer__user-status">Pro</span>}
             </div>
             <div className="offer__description">
-              {description.split('.').map((item) => <p key={item.slice(0,10)} className="offer__text">{item}</p>)}
+              {description}
             </div>
           </div>
           <section className="offer__reviews reviews">

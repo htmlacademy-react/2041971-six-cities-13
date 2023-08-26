@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { Review } from '../../types/reviews';
 import { DateFormat } from '../../const';
+import { getRatingStarsStyle } from '../../utils/utils';
 
 type ReviewCardProps = {
   review: Review;
@@ -15,13 +16,12 @@ function ReviewCard({review}: ReviewCardProps): JSX.Element {
           <img className='reviews__avatar user__avatar' src={user.avatarUrl} width={54} height={54} alt='Reviews avatar' />
         </div>
         <span className='reviews__user-name'>{user.name}</span>
-        {user.isPro && <span className="offer__user-status">Pro</span>}
       </div>
       <div className='reviews__info'>
         <div className='reviews__rating rating'>
           <div className='reviews__stars rating__stars'>
             <span style={{
-              width: '80%'
+              width: getRatingStarsStyle(rating)
             }}
             >
             </span>
