@@ -9,7 +9,7 @@ function FavoritesList({offers}: FavoritesListProps): JSX.Element {
   const cities = Array.from(new Set(offers.map((offer) => offer.city.name)));
 
   return (
-    <section className="favorites" data-testid="favorites container">
+    <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>
       <ul className="favorites__list">
         {cities.map((city) =>{
