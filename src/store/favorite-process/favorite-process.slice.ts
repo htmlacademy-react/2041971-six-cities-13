@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FavoriteProcess } from '../../types/state';
-import { fetchFavoritesAction } from '../api-actions';
+import { fetchChangeStatusFavoriteAction, fetchFavoritesAction } from '../api-actions';
 
 const initialState: FavoriteProcess = {
   favorites: [],
@@ -26,6 +26,13 @@ export const favoriteProcess = createSlice({
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.isFavoritesDataLoading = false;
         state.hasError = true;
+      })
+      .addCase(fetchChangeStatusFavoriteAction.fulfilled, (state, action) => {
+        if (action.payload.isFavorite) {
+          state.favorites.push(action.payload);
+        } else {
+          state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
+        }
       });
   }
 });

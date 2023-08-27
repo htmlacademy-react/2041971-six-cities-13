@@ -42,5 +42,5 @@ export function getType(type: string) {
 }
 
 export function isReviewFormValid(ratingData: number, comment: FormDataEntryValue) {
-  return ratingData > 0 && comment.length < 301 && comment.length > 49;
+  return Number(ratingData) > 0 && comment.length < 301 && comment.length > 49;
 }

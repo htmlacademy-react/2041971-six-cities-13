@@ -1,10 +1,11 @@
 import { store } from '../store/index';
 import { AuthorizationStatus, SortingType } from '../const';
 import { Offer, OfferCard } from '../types/offer';
-import { Review, Comment } from './reviews';
+import { Review } from './reviews';
 
 export type UserProcess = {
     authorizationStatus: AuthorizationStatus;
+    email: string;
 }
 
 export type OffersProcess = {
@@ -22,7 +23,7 @@ export type OfferIdProcess = {
   isCommentSending: boolean;
   nearbyOffers: Offer[];
   comments: Review[];
-  comment: Comment | null;
+  comment: Review | null;
   hasOfferError: boolean;
   hasNearbyError: boolean;
   hasCommentsLoadingError: boolean;

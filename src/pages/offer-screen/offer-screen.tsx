@@ -50,7 +50,7 @@ function OfferScreen():JSX.Element {
             <section className="offer">
               <OfferDetails offer={offer} />
               <section className="offer__map map">
-                <Map offers={neighbourhoods} selectedOffer={offer}/>
+                <Map offers={neighbourhoods} selectedOffer={offer} isDetailPage />
               </section>
             </section>
             <div className="container">

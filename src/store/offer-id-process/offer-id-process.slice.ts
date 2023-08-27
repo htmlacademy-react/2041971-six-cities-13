@@ -64,6 +64,10 @@ export const offerIdProcess = createSlice({
       .addCase(fetchSendCommentAction.fulfilled, (state, action) => {
         state.isCommentSending = false;
         state.comment = action.payload;
+
+        if (action.payload) {
+          state.comments.unshift(action.payload);
+        }
       })
       .addCase(fetchSendCommentAction.rejected, (state) => {
         state.isCommentSending = false;

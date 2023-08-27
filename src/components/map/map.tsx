@@ -9,6 +9,7 @@ import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 type MapProps = {
     offers: Offer[];
     selectedOffer?: Offer | OfferCard |undefined;
+    isDetailPage?: boolean;
 }
 
 const defaultCustomIcon = new Icon({
@@ -23,7 +24,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({offers, selectedOffer}: MapProps): JSX.Element {
+function Map({offers, selectedOffer, isDetailPage}: MapProps): JSX.Element {
   let cityLocation = offers[0]?.city.location;
 
   if (!offers.length && selectedOffer) {
@@ -49,7 +50,8 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      if (selectedOffer) {
+
+      if (isDetailPage && selectedOffer) {
         const markerSelected = new Marker({
           lat: selectedOffer.location.latitude,
           lng: selectedOffer.location.longitude,
@@ -58,6 +60,7 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
           .setIcon(currentCustomIcon)
           .addTo(markerLayer);
       }
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -76,7 +79,7 @@ function Map({offers, selectedOffer}: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers, selectedOffer, isDetailPage]);
 
   return (
     <div ref={mapRef} ></div>

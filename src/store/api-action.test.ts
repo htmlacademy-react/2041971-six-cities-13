@@ -3,10 +3,10 @@ import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { Action } from 'redux';
-import { AppThunkDispatch, extractActionsTypes, makeFakeComment, makeFakeFullOffer, makeFakeOffers, makeFakeReviews } from '../utils/mock';
+import { AppThunkDispatch, extractActionsTypes, makeFakeFullOffer, makeFakeOffers, makeFakeReviews } from '../utils/mock';
 import { APIRoute } from '../const';
 import { State } from '../types/state';
-import { checkAuthAction, fetchChangeStatusFavoriteAction, fetchCommentsAction, fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferByIdAction, fetchOffersAction, fetchSendCommentAction, loginAction, logoutAction } from './api-actions';
+import { checkAuthAction, fetchChangeStatusFavoriteAction, fetchCommentsAction, fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferByIdAction, fetchOffersAction, loginAction, logoutAction } from './api-actions';
 import { redirectToRoute } from './action';
 import { AuthData } from '../types/auth-data';
 import * as tokenStorage from '../services/token';
@@ -229,33 +229,6 @@ describe('Async actions', () => {
       expect(actions).toEqual([
         fetchNearbyOffersAction.pending.type,
         fetchNearbyOffersAction.rejected.type,
-      ]);
-    });
-  });
-
-  describe('fetchSendCommentAction', () => {
-    it('should dispatch "fetchSendCommentAction.pending", "fetchSendCommentAction.fulfilled", when server response 200', async () => {
-      const mockComment = makeFakeComment();
-      const offerId = 'eahvfie';
-      mockAxiosAdapter.onPost(`${APIRoute.Comments}/${offerId}`).reply(200);
-      await store.dispatch(fetchSendCommentAction({rating: mockComment.ratingData, comment: mockComment.comment, id: offerId}));
-      const actions = extractActionsTypes(store.getActions());
-      expect(actions).toEqual([
-        fetchSendCommentAction.pending.type,
-        fetchCommentsAction.pending.type,
-        fetchSendCommentAction.fulfilled.type,
-      ]);
-    });
-
-    it('should dispatch "fetchSendCommentAction.pending", "fetchSendCommentAction.rejected", when server response 400', async () => {
-      const mockComment = makeFakeComment();
-      const offerId = 'eahvfie';
-      mockAxiosAdapter.onGet(`${APIRoute.Comments}/${offerId}`).reply(400);
-      await store.dispatch(fetchSendCommentAction({rating: mockComment.ratingData, comment: mockComment.comment, id: offerId}));
-      const actions = extractActionsTypes(store.getActions());
-      expect(actions).toEqual([
-        fetchSendCommentAction.pending.type,
-        fetchSendCommentAction.rejected.type,
       ]);
     });
   });

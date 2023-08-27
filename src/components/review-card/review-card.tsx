@@ -9,6 +9,7 @@ type ReviewCardProps = {
 
 function ReviewCard({review}: ReviewCardProps): JSX.Element {
   const {user, rating, comment, date} = review;
+
   return (
     <li className='reviews__item'>
       <div className='reviews__user user'>
