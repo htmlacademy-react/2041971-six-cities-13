@@ -1,12 +1,11 @@
 import { offerIdProcess } from './offer-id-process.slice';
-import { makeFakeComment, makeFakeFullOffer, makeFakeOffer, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
+import { makeFakeFullOffer, makeFakeOffer, makeFakeOffers, makeFakeReviews } from '../../utils/mock';
 import { fetchOfferByIdAction, fetchNearbyOffersAction, fetchCommentsAction, fetchSendCommentAction } from '../api-actions';
 
 const fakeOffer = makeFakeOffer();
 const fakeFullOffer = makeFakeFullOffer();
 const fakeNearby = makeFakeOffers();
 const fakeReviews = makeFakeReviews();
-const fakeComment = makeFakeComment();
 
 describe('OfferIdProcess Slice', () => {
   const initialState = {
@@ -22,19 +21,6 @@ describe('OfferIdProcess Slice', () => {
     hasCommentsLoadingError: false,
     hasCommentSendingError: false,
   };
-
-  it('should return initial state with empty action', () => {
-    const emptyAction = { type: '' };
-    const expectedState = {
-      ...initialState,
-      offer: fakeFullOffer,
-      nearbyOffers: fakeNearby,
-      comments: fakeReviews,
-      comment: fakeComment,
-    };
-    const result = offerIdProcess.reducer(expectedState, emptyAction);
-    expect(result).toEqual(expectedState);
-  });
 
   it('should return default initial state with empty axtion and undefined state', () => {
     const emptyAction = { type: '' };
@@ -108,16 +94,6 @@ describe('OfferIdProcess Slice', () => {
       comments: fakeReviews,
     };
     const result = offerIdProcess.reducer(undefined, fetchCommentsAction.fulfilled(fakeReviews, '', fakeOffer.id));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('should set "isCommentSending" to "false", "comment" to object of comment with "fetchSendCommentAction.fullfilled"', () => {
-    const expectedState = {
-      ...initialState,
-      comment: fakeComment,
-      isCommentSending: false,
-    };
-    const result = offerIdProcess.reducer(undefined, fetchSendCommentAction.fulfilled(fakeComment, '', {rating: fakeComment.ratingData, comment: fakeComment.comment, id: fakeOffer.id}));
     expect(result).toEqual(expectedState);
   });
 

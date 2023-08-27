@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/user-process/user-process.selector';
 import { getOffers, getOffersDataLoadingStatus, getErrorStatus } from '../../store/offers-process/offers-process.selector';
 import Layout from '../layout/layout';
@@ -13,6 +13,8 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-rout';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import ErrorScreen from '../../pages/error-screen/error-screen';
+import { useEffect } from 'react';
+import { checkAuthAction, fetchOffersAction } from '../../store/api-actions';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
@@ -20,6 +22,12 @@ function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
   const hasError = useAppSelector(getErrorStatus);
   const offers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+    dispatch(checkAuthAction());
+  }, [dispatch]);
 
   if (!isAuthChecked || isOffersDataLoading) {
     return (

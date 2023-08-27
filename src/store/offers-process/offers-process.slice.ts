@@ -2,9 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, SortingType } from '../../const';
 import { OffersProcess } from '../../types/state';
 import { fetchChangeStatusFavoriteAction, fetchOffersAction } from '../api-actions';
-import { Offer } from '../../types/offer';
 import { DEFAULT_CITY, DEFAULT_SORT } from '../../const';
-
 
 const initialState: OffersProcess = {
   city: DEFAULT_CITY,
@@ -40,13 +38,12 @@ export const offersProcess = createSlice({
         state.hasError = true;
       })
       .addCase(fetchChangeStatusFavoriteAction.fulfilled, (state, action) => {
-        state.offers = state.offers.reduce((acc: Offer[], offer) => {
+        state.offers = state.offers.map((offer) => {
           if (offer.id === action.payload.id) {
-            return [...acc, {...offer,
-              isFavorite: !offer.isFavorite}];
+            return action.payload;
           }
-          return [...acc, offer];
-        }, []);
+          return offer;
+        });
       });
   }
 });

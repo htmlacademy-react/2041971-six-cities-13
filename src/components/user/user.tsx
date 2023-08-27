@@ -8,7 +8,7 @@ import { getFavoritesCount } from '../../store/favorite-process/favorite-process
 function User(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoritesCount = useAppSelector(getFavoritesCount);
-  const userName = getUserEmail();
+  const userName = useAppSelector(getUserEmail);
 
   const handleFavoriteClick = () => dispatch(fetchFavoritesAction());
 
