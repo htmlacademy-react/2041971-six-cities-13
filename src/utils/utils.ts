@@ -37,7 +37,7 @@ export function getRandomCity(cities: typeof CITIES) {
   return cities[Math.floor(Math.random() * cities.length)];
 }
 
-export function getType(type: string) {
+export function getType(type: string): string {
   return type.charAt(0).toUpperCase() + type.slice(1);
 }
 

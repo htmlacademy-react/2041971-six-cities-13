@@ -23,7 +23,13 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
 
   const handleFieldChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = evt.target;
-    setFormState({...formState, [name]: value});
+    let parsedValue: string | number = value;
+
+    if (name === 'ratingData') {
+      parsedValue = Number(value);
+    }
+
+    setFormState({...formState, [name]: parsedValue});
   };
 
   const isDisabled = isCommentSending || !isReviewFormValid(formState.ratingData, formState.comment);
@@ -56,7 +62,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
         <input className="form__rating-input visually-hidden"
           name="ratingData"
           value="5"
-          checked={Number(formState.ratingData) === 5}
+          checked={formState.ratingData === 5}
           id="5-stars"
           type="radio"
           required
@@ -73,7 +79,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="ratingData"
           value="4"
-          checked={Number(formState.ratingData) === 4}
+          checked={formState.ratingData === 4}
           id="4-stars"
           type="radio"
           disabled={isCommentSending}
@@ -89,7 +95,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="ratingData"
           value="3"
-          checked={Number(formState.ratingData) === 3}
+          checked={formState.ratingData === 3}
           id="3-stars"
           type="radio"
           disabled={isCommentSending}
@@ -105,7 +111,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="ratingData"
           value="2"
-          checked={Number(formState.ratingData) === 2}
+          checked={formState.ratingData === 2}
           id="2-stars"
           type="radio"
           disabled={isCommentSending}
@@ -121,7 +127,7 @@ function CommentForm({id}: CommentFormProps): JSX.Element {
           className="form__rating-input visually-hidden"
           name="ratingData"
           value="1"
-          checked={Number(formState.ratingData) === 1}
+          checked={formState.ratingData === 1}
           id="1-star"
           type="radio"
           disabled={isCommentSending}

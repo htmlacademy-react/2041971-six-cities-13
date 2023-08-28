@@ -8,7 +8,7 @@ import { getFavoritesCount } from '../../store/favorite-process/favorite-process
 function User(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoritesCount = useAppSelector(getFavoritesCount);
-  const userName = useAppSelector(getUserEmail);
+  const userEmail = useAppSelector(getUserEmail);
 
   const handleFavoriteClick = () => dispatch(fetchFavoritesAction());
 
@@ -22,7 +22,7 @@ function User(): JSX.Element {
           >
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
-            <span className="header__user-name user__name">{userName}</span>
+            <span className="header__user-name user__name">{userEmail}</span>
             <span className="header__favorite-count">{favoritesCount}</span>
           </Link>
         </li>
